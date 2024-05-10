@@ -1,9 +1,10 @@
+import Header from "@/components/ui/header";
 import Image from "next/image";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-10">
-      <div className="text-red-500">Hello World!</div>
-    </main>
+   <div className="capitalize">
+    teste
+   </div>
   );
 }
