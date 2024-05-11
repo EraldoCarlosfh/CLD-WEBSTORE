@@ -4,7 +4,7 @@ import Image from "next/image";
 import Categories from "./components/categories";
 import ProductHomeList from "./components/product-home-list";
 import { prismaClient } from "@/lib/prisma";
-import { PercentCircleIcon, PercentIcon } from "lucide-react";
+import { KeyboardIcon, MouseIcon, PercentCircleIcon } from "lucide-react";
 
 const Home = async () => {
   const deals = await prismaClient.products.findMany({
@@ -15,10 +15,22 @@ const Home = async () => {
     },
   });
 
+  const mouses = await prismaClient.products.findMany({
+    where: {
+      categoryId: "ccd21ee6-6f57-4321-a95f-04664320ff57",
+    },
+  });
+
+  const keyboards = await prismaClient.products.findMany({
+    where: {
+      categoryId: "eff42f31-46e1-4aa2-9169-3bba62c25099",
+    },
+  });
+
   return (
     <div>
       <Image
-        className="h-auto w-full rounded-[2rem] p-5"
+        className="h-auto w-full rounded-[2rem] p-5 mt-2"
         src="/banner_home.jpg"
         alt="Até 55% de desconto esse mês!"
         width={0}
@@ -28,11 +40,39 @@ const Home = async () => {
       <div className="p-5">
         <Categories />
       </div>
-      <div className="flex items-center text-2xl font-bold p-5">
-        <PercentCircleIcon className="mr-1" size={20} /> Ofertas
+      <div className="flex items-center pl-5 text-xl font-bold uppercase mt-2">
+        <PercentCircleIcon className="mr-1" size={18} /> Ofertas
       </div>
-      <div className="mt-4">
+      <div className="mt-6">
         <ProductHomeList products={deals} />
+      </div>
+      <Image
+        className="h-auto w-full rounded-[2rem] p-5 mt-4"
+        src="/banner_home2.jpg"
+        alt="Até 55% de desconto em mouses!"
+        width={0}
+        sizes="100vw"
+        height={0}
+      />
+      <div className="flex items-center pl-5 text-xl font-bold uppercase mt-2">
+        <MouseIcon className="mr-1" size={18} /> Mouses
+      </div>
+      <div className="mt-6">
+        <ProductHomeList products={mouses} />
+      </div>
+      <Image
+        className="h-auto w-full rounded-[2rem] p-5 mt-4"
+        src="/banner_home3.jpg"
+        alt="Até 20% de desconto em fones!"
+        width={0}
+        sizes="100vw"
+        height={0}
+      />
+       <div className="flex items-center pl-5 text-xl font-bold uppercase mt-2">
+        <KeyboardIcon className="mr-1" size={18} /> Teclados
+      </div>
+      <div className="mt-6">
+        <ProductHomeList products={keyboards} />
       </div>
     </div>
   );
