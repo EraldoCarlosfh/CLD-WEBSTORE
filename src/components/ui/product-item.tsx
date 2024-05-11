@@ -2,6 +2,12 @@ import { Products } from "@prisma/client";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { ArrowDownIcon } from "lucide-react";
+import {
+  TooltipProvider,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface ProductItemProps {
   product: Products;
@@ -21,15 +27,23 @@ const ProductItem = ({ product }: ProductItemProps) => {
           alt={product.name}
         />
         {product.discountPercentage > 0 && (
-            <Badge className="absolute left-3 top-3 px-2 py-[2px]">
-            <ArrowDownIcon size={14}/>{product.discountPercentage}% OFF
-            </Badge>
+          <Badge className="absolute left-3 top-3 px-2 py-[2px]">
+            <ArrowDownIcon size={14} />
+            {product.discountPercentage}% OFF
+          </Badge>
         )}
       </div>
       <div>
-        <p className="text-sm overflow-hidden text-ellipsis whitespace-nowrap">
-          {product.name}
-        </p>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger className="w-[156px] text-sm overflow-hidden text-ellipsis whitespace-nowrap">
+              {product.name}
+            </TooltipTrigger>
+            <TooltipContent>
+              {product.name}
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
         <div className="flex items-center gap-2">
           <p className="text-[13px] font-semibold">
             {product.totalPrice
