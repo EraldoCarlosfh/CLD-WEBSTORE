@@ -131,9 +131,11 @@ const Header = () => {
           </div>
         </SheetContent>
       </Sheet>
-      <h1 className="font-semibold text-xl">
-        <span className="text-primary">CLD </span>Web Store
-      </h1>
+      <Link href={`/`}>
+        <h1 className="font-semibold text-xl">
+          <span className="text-primary">CLD </span>Web Store
+        </h1>
+      </Link>
       <Button size="icon" variant="outline">
         <ShoppingCartIcon />
       </Button>

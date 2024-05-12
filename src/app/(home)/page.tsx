@@ -6,7 +6,7 @@ import { prismaClient } from "@/lib/prisma";
 import SectionTitle from "@/components/ui/section-title";
 import PromoBanner from "./components/promo-banner";
 
-const Home = async () => {
+const HomePage = async () => {
   const deals = await prismaClient.products.findMany({
     where: {
       discountPercentage: {
@@ -75,4 +75,4 @@ const Home = async () => {
     </div>
   );
 };
-export default Home;
+export default HomePage;
