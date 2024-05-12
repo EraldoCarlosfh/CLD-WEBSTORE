@@ -14,6 +14,7 @@ import { Card } from "./card";
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "./sheet";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import Link from "next/link";
 
 const Header = () => {
   const { status, data } = useSession();
@@ -75,14 +76,16 @@ const Header = () => {
                 >
                   <LogOutIcon size={16}></LogOutIcon>Sair
                 </Button>
-                <Button
-                  size="icon"
-                  variant="outline"
-                  className="w-full p-2 justify-start gap-1.5"
-                >
-                  <HomeIcon size={16} />
-                  Início
-                </Button>
+                <Link href={`/`}>
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    className="w-full p-2 justify-start gap-1.5"
+                  >
+                    <HomeIcon size={16} />
+                    Início
+                  </Button>
+                </Link>
                 <Button
                   size="icon"
                   variant="outline"
@@ -91,14 +94,16 @@ const Header = () => {
                   <PercentIcon size={16} />
                   Ofertas
                 </Button>
-                <Button
-                  size="icon"
-                  variant="outline"
-                  className="w-full p-2 justify-start gap-1.5"
-                >
-                  <ListOrderedIcon size={16} />
-                  Catálogo
-                </Button>
+                <Link href={`/catalog`}>
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    className="w-full p-2 justify-start gap-1.5"
+                  >
+                    <ListOrderedIcon size={16} />
+                    Catálogo
+                  </Button>
+                </Link>
               </>
             )}
           </div>
