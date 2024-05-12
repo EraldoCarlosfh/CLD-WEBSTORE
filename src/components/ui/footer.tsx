@@ -1,11 +1,8 @@
-import { Copyright } from "lucide-react";
-
 const Footer = () => {
   return (
-    <div className="w-full flex items-center justify-center bg-accent mt-20 h-20 text-gray-400">
-      <Copyright className="opacity-75 font-light mr-1" size={16}></Copyright>
-      <span className="opacity-75 font-light mr-1">2023 Copyright</span>
-      <span className="font-medium opacity-75"> CLD Web Store</span>
+    <div className="flex justify-center bg-accent px-8 py-4 opacity-75 text-[0.65rem]">
+      © 2023 Copyright
+      <span className="font-semibold ml-1"> CLD Web Store</span>
     </div>
   );
 };
