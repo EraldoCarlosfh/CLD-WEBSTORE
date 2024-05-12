@@ -5,6 +5,7 @@ import Categories from "./components/categories";
 import ProductHomeList from "./components/product-home-list";
 import { prismaClient } from "@/lib/prisma";
 import { KeyboardIcon, MouseIcon, PercentCircleIcon } from "lucide-react";
+import SectionTitle from "@/components/ui/section-title";
 
 const Home = async () => {
   const deals = await prismaClient.products.findMany({
@@ -17,20 +18,24 @@ const Home = async () => {
 
   const mouses = await prismaClient.products.findMany({
     where: {
-      categoryId: "ccd21ee6-6f57-4321-a95f-04664320ff57",
+      category: {
+        slug: "mouses",
+      },
     },
   });
 
   const keyboards = await prismaClient.products.findMany({
     where: {
-      categoryId: "eff42f31-46e1-4aa2-9169-3bba62c25099",
+      category: {
+        slug: "keyboards",
+      },
     },
   });
 
   return (
     <div>
       <Image
-        className="h-auto w-full rounded-[2rem] p-5 mt-2"
+        className="mt-2 h-auto w-full rounded-[2rem] p-5"
         src="/banner_home.jpg"
         alt="Até 55% de desconto esse mês!"
         width={0}
@@ -40,37 +45,35 @@ const Home = async () => {
       <div className="p-5">
         <Categories />
       </div>
-      <div className="flex items-center pl-5 text-xl font-bold uppercase mt-2">
+      <div className="mt-2 flex items-center pl-5 text-xl font-bold uppercase">
         <PercentCircleIcon className="mr-1" size={18} /> Ofertas
       </div>
       <div className="mt-6">
         <ProductHomeList products={deals} />
       </div>
       <Image
-        className="h-auto w-full rounded-[2rem] p-5 mt-4"
+        className="mt-4 h-auto w-full rounded-[2rem] p-5"
         src="/banner_home2.jpg"
         alt="Até 55% de desconto em mouses!"
         width={0}
         sizes="100vw"
         height={0}
       />
-      <div className="flex items-center pl-5 text-xl font-bold uppercase mt-2">
+      <div className="mt-2 flex items-center pl-5 text-xl font-bold uppercase">
         <MouseIcon className="mr-1" size={18} /> Mouses
       </div>
       <div className="mt-6">
         <ProductHomeList products={mouses} />
       </div>
       <Image
-        className="h-auto w-full rounded-[2rem] p-5 mt-4"
+        className="mt-4 h-auto w-full rounded-[2rem] p-5"
         src="/banner_home3.jpg"
         alt="Até 20% de desconto em fones!"
         width={0}
         sizes="100vw"
         height={0}
       />
-       <div className="flex items-center pl-5 text-xl font-bold uppercase mt-2">
-        <KeyboardIcon className="mr-1" size={18} /> Teclados
-      </div>
+      <SectionTitle title="Teclados"/>
       <div className="mt-6">
         <ProductHomeList products={keyboards} />
       </div>
