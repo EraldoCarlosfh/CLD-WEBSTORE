@@ -9,7 +9,9 @@ const ProductHomeList = ({ products }: ProductHomeListProps) => {
   return (
     <div className="flex w-full gap-4 overflow-x-auto px-5 [&::-webkit-scrollbar]:hidden">
       {products.map((product) => (
-        <ProductItem key={product.id} product={product} />
+        <div key={product.id} className="w-[9.75rem] max-w-[9.75rem]">
+          <ProductItem key={product.id} product={product} />
+        </div>
       ))}
     </div>
   );

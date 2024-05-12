@@ -15,10 +15,10 @@ interface ProductItemProps {
 
 const ProductItem = ({ product }: ProductItemProps) => {
   return (
-    <div className="flex flex-col gap-4 max-w-[9.75rem]">
-      <div className="relative flex h-[10.625rem] w-[9.75rem] items-center justify-center rounded-lg bg-accent">
+    <div className="flex flex-col gap-4">
+      <div className="relative flex h-[10.625rem] w-full items-center justify-center rounded-lg bg-accent">
         <Image
-          className="h-auto max-h-[70%] w-auto max-w-[80%] mt-4"
+          className="h-auto max-h-[70%] w-auto max-w-[80%]"
           src={product.imageUrls[0]}
           style={{ objectFit: "contain" }}
           width={0}
@@ -33,8 +33,8 @@ const ProductItem = ({ product }: ProductItemProps) => {
           </Badge>
         )}
       </div>
-      <div className={product.name.length > 18 ? 'flex flex-col gap-1' : 'flex flex-col items-start gap-1'}>
-        <TooltipProvider>
+      <div className="flex flex-col gap-1">
+        {/* <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
               <p className="overflow-hidden text-ellipsis whitespace-nowrap text-sm">
@@ -45,7 +45,10 @@ const ProductItem = ({ product }: ProductItemProps) => {
               {product.name}
             </TooltipContent>
           </Tooltip>
-        </TooltipProvider>
+        </TooltipProvider> */}
+        <p className="overflow-hidden text-ellipsis whitespace-nowrap text-sm">
+          {product.name}
+        </p>
         <div className="flex items-center gap-2">
           <p className="text-sm font-semibold">
             {product.totalPrice

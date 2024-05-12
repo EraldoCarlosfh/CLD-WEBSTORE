@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import { ShapesIcon } from "lucide-react";
+import { ListIcon } from "lucide-react";
 import CategoryItem from "./components/category-item";
 import { prismaClient } from "@/lib/prisma";
 
@@ -12,7 +12,7 @@ const CatalogPage = async () => {
         className="w-fit gap-1 border-2 border-primary px-3 py-[0.372rem] text-base uppercase"
         variant="outline"
       >
-        <ShapesIcon size={16} />
+        <ListIcon size={16} />
         Catálogo
       </Badge>
 
