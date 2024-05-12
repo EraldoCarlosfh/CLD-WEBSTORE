@@ -35,7 +35,7 @@ const Home = async () => {
   return (
     <div>
       <PromoBanner
-        src="/banner_home.jpg"       
+        src="/banner_discount.jpg"       
         alt="Até 55% de desconto esse mês!"
       />
 
@@ -49,7 +49,7 @@ const Home = async () => {
       </div>
 
       <PromoBanner
-        src="/banner_home2.jpg"       
+        src="/banner_mouses.jpg"       
         alt="Até 55% de desconto em mouses!"
       />
 
@@ -59,7 +59,7 @@ const Home = async () => {
       </div>
 
       <PromoBanner
-        src="/banner_home3.jpg"      
+        src="/banner_phones.jpg"      
         alt="Até 20% de desconto em fones!"
       />
 
