@@ -1,14 +1,10 @@
-import { KeyboardIcon } from "lucide-react";
+import { ComponentProps} from "react";
 
-interface SectionTitleProps {
-  title: string;
-}
-
-const SectionTitle = ({ title }: SectionTitleProps) => {
+const SectionTitle = ({ children, ...props }: ComponentProps<"p">) => { 
   return (
-    <div className="mt-2 flex items-center pl-5 text-xl font-bold uppercase">
-      <KeyboardIcon className="mr-1" size={18} /> {title}
-    </div>
+    <p className="mb-3 pl-5 font-bold uppercase" {... props}>
+      {children}
+    </p>
   );
 };
 
