@@ -2,11 +2,16 @@ import { Badge } from "@/components/ui/badge";
 import ProductItem from "@/components/ui/product-item";
 import { CATEGORY_ICON } from "@/constants/category-icon";
 import { prismaClient } from "@/lib/prisma";
+interface CategoryProductsPageProps {
+  params: {
+    slug: string;
+  };
+}
 
-const CategoryProducts = async ({ params }: any) => {
+const CategoryProductsPage = async ({params: { slug },}: CategoryProductsPageProps) => {
   const category = await prismaClient.categorys.findFirst({
     where: {
-      slug: params.slug,
+      slug: slug,
     },
     include: {
       products: true,
@@ -23,7 +28,7 @@ const CategoryProducts = async ({ params }: any) => {
         className="w-fit gap-1 border-2 border-primary px-3 py-[0.372rem] text-base uppercase"
         variant="outline"
       >
-        {CATEGORY_ICON[params.slug as keyof typeof CATEGORY_ICON]}
+        {CATEGORY_ICON[slug as keyof typeof CATEGORY_ICON]}
         {category.name}
       </Badge>
 
@@ -36,4 +41,4 @@ const CategoryProducts = async ({ params }: any) => {
   );
 };
 
-export default CategoryProducts;
+export default CategoryProductsPage;
