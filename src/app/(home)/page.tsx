@@ -33,37 +33,43 @@ const Home = async () => {
   });
 
   return (
-    <div>
-      <PromoBanner
-        src="/banner_discount.jpg"       
-        alt="Até 55% de desconto esse mês!"
-      />
+    <div className="flex flex-col gap-8">
+      <div className="mt-8">        
+        <PromoBanner
+          src="/banner_discount.jpg"       
+          alt="Até 55% de desconto esse mês!"
+        />
+      </div>
 
-      <div className="mt-8 px-5">
+      <div className="px-5">
         <Categories />
       </div>
 
-      <div className="mt-8">
+      <div>
         <SectionTitle>Ofertas</SectionTitle>
         <ProductHomeList products={deals} />
       </div>
 
-      <PromoBanner
-        src="/banner_mouses.jpg"       
-        alt="Até 55% de desconto em mouses!"
-      />
+      <div>        
+        <PromoBanner
+          src="/banner_mouses.jpg"       
+          alt="Até 55% de desconto em mouses!"
+        />
+      </div>
 
-      <div className="mt-8">
+      <div>
         <SectionTitle>Mouses</SectionTitle>
         <ProductHomeList products={mouses} />
       </div>
 
-      <PromoBanner
-        src="/banner_phones.jpg"      
-        alt="Até 20% de desconto em fones!"
-      />
+      <div>
+        <PromoBanner
+          src="/banner_phones.jpg"      
+          alt="Até 20% de desconto em fones!"
+        />
+      </div>
 
-      <div className="mt-8">
+      <div>
         <SectionTitle>Teclados</SectionTitle>
         <ProductHomeList products={keyboards} />
       </div>
