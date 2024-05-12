@@ -11,7 +11,13 @@ import {
 } from "lucide-react";
 import { Button } from "./button";
 import { Card } from "./card";
-import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "./sheet";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetHeader,
+  SheetTrigger,
+} from "./sheet";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import Link from "next/link";
@@ -45,65 +51,81 @@ const Header = () => {
                   {data?.user?.name?.[0].toUpperCase()}
                 </AvatarFallback>
 
-                {data?.user?.image && <AvatarImage width="45" style={{ borderRadius: 25, border: "1px solid white" }} src={data?.user?.image} />}
+                {data?.user?.image && (
+                  <AvatarImage
+                    width="45"
+                    style={{ borderRadius: 25, border: "1px solid white" }}
+                    src={data?.user?.image}
+                  />
+                )}
               </Avatar>
 
               <div className="flex-col text-center">
                 <p className="font-medium">{data?.user?.name}</p>
                 <p className="text-sm opacity-75">Boas compras!</p>
               </div>
-            </div>         
+            </div>
           )}
 
           <div className="mt-2 flex flex-col gap-2">
             {status == "unauthenticated" ? (
-              <Button
-                size="icon"
-                variant="default"
-                onClick={handlerLoginClick}
-                className="w-full p-2 justify-start gap-1.5"
-              >
-                <LogInIcon size={16} />
-                Fazer Login
-              </Button>
+              <SheetClose asChild>
+                <Button
+                  size="icon"
+                  variant="default"
+                  onClick={handlerLoginClick}
+                  className="w-full p-2 justify-start gap-1.5"
+                >
+                  <LogInIcon size={16} />
+                  Fazer Login
+                </Button>
+              </SheetClose>
             ) : (
               <>
-                <Button
-                  size="icon"
-                  variant="destructive"
-                  onClick={handlerLogoutClick}
-                  className="w-full p-2 justify-start gap-1.5"
-                >
-                  <LogOutIcon size={16}></LogOutIcon>Sair
-                </Button>
-                <Link href={`/`}>
+                <SheetClose asChild>
+                  <Button
+                    size="icon"
+                    variant="destructive"
+                    onClick={handlerLogoutClick}
+                    className="w-full p-2 justify-start gap-1.5"
+                  >
+                    <LogOutIcon size={16}></LogOutIcon>Sair
+                  </Button>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link href={`/`}>
+                    <Button
+                      size="icon"
+                      variant="outline"
+                      className="w-full p-2 justify-start gap-1.5"
+                    >
+                      <HomeIcon size={16} />
+                      Início
+                    </Button>
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
                   <Button
                     size="icon"
                     variant="outline"
                     className="w-full p-2 justify-start gap-1.5"
                   >
-                    <HomeIcon size={16} />
-                    Início
+                    <PercentIcon size={16} />
+                    Ofertas
                   </Button>
-                </Link>
-                <Button
-                  size="icon"
-                  variant="outline"
-                  className="w-full p-2 justify-start gap-1.5"
-                >
-                  <PercentIcon size={16} />
-                  Ofertas
-                </Button>
-                <Link href={`/catalog`}>
-                  <Button
-                    size="icon"
-                    variant="outline"
-                    className="w-full p-2 justify-start gap-1.5"
-                  >
-                    <ListOrderedIcon size={16} />
-                    Catálogo
-                  </Button>
-                </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link href={`/catalog`}>
+                    <Button
+                      size="icon"
+                      variant="outline"
+                      className="w-full p-2 justify-start gap-1.5"
+                    >
+                      <ListOrderedIcon size={16} />
+                      Catálogo
+                    </Button>
+                  </Link>
+                </SheetClose>
               </>
             )}
           </div>
