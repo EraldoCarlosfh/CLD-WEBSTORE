@@ -1,6 +1,5 @@
 // (home) pasta com parenteses => route-grup
 // não é tratada como rota
-import Image from "next/image";
 import Categories from "./components/categories";
 import ProductHomeList from "./components/product-home-list";
 import { prismaClient } from "@/lib/prisma";
