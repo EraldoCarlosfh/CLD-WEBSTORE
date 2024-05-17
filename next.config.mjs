@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ["storagenordsol.blob.core.windows.net"]
+        domains: ["xarwas4csfe8g80s.public.blob.vercel-storage.com"]
     }
 };
 
