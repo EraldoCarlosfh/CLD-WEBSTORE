@@ -81,17 +81,17 @@ const Header = () => {
             </div>
 
             <SheetClose asChild>
-              <SheetClose asChild>
-                  <Button
-                    size="icon"
-                    variant="default"
-                    onClick={handlerLoginClick}
-                    className="w-full p-2 justify-start gap-1.5"
-                  >
-                    <LogInIcon size={16} />
-                    Fazer Login
-                  </Button>
-                </SheetClose>
+              <Button
+                size="icon"
+                variant="default"
+                onClick={handlerLoginClick}
+                className="w-full p-2 justify-start gap-1.5"
+              >
+                <LogInIcon size={16} />
+                Fazer Login
+              </Button>
+            </SheetClose>
+            <SheetClose asChild>
                 <Link href={`/`}>
                   <Button
                     size="icon"
