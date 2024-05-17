@@ -80,40 +80,51 @@ const Header = () => {
               </div>
             </div>
 
+            <SheetClose asChild>
               <SheetClose asChild>
-                  <Link href={`/`}>
-                    <Button
-                      size="icon"
-                      variant="default"
-                      className="w-full p-2 justify-start gap-1.5"
-                    >
-                      <HomeIcon size={16} />
-                      Início
-                    </Button>
-                  </Link>
+                  <Button
+                    size="icon"
+                    variant="default"
+                    onClick={handlerLoginClick}
+                    className="w-full p-2 justify-start gap-1.5"
+                  >
+                    <LogInIcon size={16} />
+                    Fazer Login
+                  </Button>
                 </SheetClose>
-                <SheetClose asChild>
+                <Link href={`/`}>
                   <Button
                     size="icon"
                     variant="outline"
                     className="w-full p-2 justify-start gap-1.5"
                   >
-                    <PercentIcon size={16} />
-                    Ofertas
+                    <HomeIcon size={16} />
+                    Início
                   </Button>
-                </SheetClose>
-                <SheetClose asChild>
-                  <Link href={`/catalog`}>
-                    <Button
-                      size="icon"
-                      variant="outline"
-                      className="w-full p-2 justify-start gap-1.5"
-                    >
-                      <ListOrderedIcon size={16} />
-                      Catálogo
-                    </Button>
-                  </Link>
-                </SheetClose>
+                </Link>
+              </SheetClose>
+              <SheetClose asChild>
+                <Button
+                  size="icon"
+                  variant="outline"
+                  className="w-full p-2 justify-start gap-1.5"
+                >
+                  <PercentIcon size={16} />
+                  Ofertas
+                </Button>
+              </SheetClose>
+              <SheetClose asChild>
+                <Link href={`/catalog`}>
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    className="w-full p-2 justify-start gap-1.5"
+                  >
+                    <ListOrderedIcon size={16} />
+                    Catálogo
+                  </Button>
+                </Link>
+              </SheetClose>
 
           {/* <div className="mt-2 flex flex-col gap-2">
             {status == "unauthenticated" ? (
