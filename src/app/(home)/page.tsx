@@ -1,10 +1,10 @@
 // (home) pasta com parenteses => route-grup
 // não é tratada como rota
 import Categories from "./components/categories";
-import ProductHomeList from "./components/product-home-list";
 import { prismaClient } from "@/lib/prisma";
 import SectionTitle from "@/components/ui/section-title";
 import PromoBanner from "./components/promo-banner";
+import ProductList from "@/components/ui/product-list";
 
 const HomePage = async () => {
   const deals = await prismaClient.products.findMany({
@@ -46,7 +46,7 @@ const HomePage = async () => {
 
       <div>
         <SectionTitle>Ofertas</SectionTitle>
-        <ProductHomeList products={deals} />
+        <ProductList products={deals} />
       </div>
 
       <div>
@@ -58,7 +58,7 @@ const HomePage = async () => {
 
       <div>
         <SectionTitle>Mouses</SectionTitle>
-        <ProductHomeList products={mouses} />
+        <ProductList products={mouses} />
       </div>
 
       <div>
@@ -70,7 +70,7 @@ const HomePage = async () => {
 
       <div>
         <SectionTitle>Teclados</SectionTitle>
-        <ProductHomeList products={keyboards} />
+        <ProductList products={keyboards} />
       </div>
     </div>
   );

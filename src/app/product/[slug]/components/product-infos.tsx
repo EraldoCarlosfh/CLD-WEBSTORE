@@ -1,7 +1,7 @@
 "use client";
-import ProductHomeList from "@/app/(home)/components/product-home-list";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import ProductList from "@/components/ui/product-list";
 import SectionTitle from "@/components/ui/section-title";
 import { Products } from "@prisma/client";
 import {
@@ -108,7 +108,7 @@ const ProductInfos = ({
         <SectionTitle className="mb-3 pl-2 font-bold uppercase">
           Produtos Recomendados
         </SectionTitle>
-        <ProductHomeList products={deals} />
+        <ProductList products={deals} />
       </div>
     </div>
   );

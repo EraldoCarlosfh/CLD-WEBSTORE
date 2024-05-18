@@ -2,11 +2,11 @@ import ProductItem from "@/components/ui/product-item";
 import { Products } from "@prisma/client";
 import Link from "next/link";
 
-interface ProductHomeListProps {
+interface ProductListProps {
   products: Products[];
 }
 
-const ProductHomeList = ({ products }: ProductHomeListProps) => {
+const ProductList = ({ products }: ProductListProps) => {
   return (
     <div className="flex w-full gap-4 overflow-x-auto px-5 [&::-webkit-scrollbar]:hidden">
       {products.map((product) => (
@@ -19,4 +19,4 @@ const ProductHomeList = ({ products }: ProductHomeListProps) => {
     </div>
   );
 };
-export default ProductHomeList;
+export default ProductList;
