@@ -17,12 +17,10 @@ interface ProductInfosProps {
     Products,
     "name" | "description" | "totalPrice" | "basePrice" | "discountPercentage"
   >;
-  deals: Products[];
 }
 
 const ProductInfos = ({
   product: { name, description, totalPrice, basePrice, discountPercentage },
-  deals,
 }: ProductInfosProps) => {
   const [quantity, setQuantity] = useState<number>(1);
 
@@ -103,13 +101,7 @@ const ProductInfos = ({
           </div>
         </div>
         <h1 className="font-semibold">Frete Grátis</h1>
-      </div>
-      <div className="mb-6 mt-5 ">
-        <SectionTitle className="mb-3 pl-2 font-bold uppercase">
-          Produtos Recomendados
-        </SectionTitle>
-        <ProductList products={deals} />
-      </div>
+      </div>      
     </div>
   );
 };

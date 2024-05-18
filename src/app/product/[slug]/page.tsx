@@ -1,6 +1,8 @@
 import { prismaClient } from "@/lib/prisma";
 import ProductImages from "./components/product-images";
 import ProductInfos from "./components/product-infos";
+import ProductList from "@/components/ui/product-list";
+import SectionTitle from "@/components/ui/section-title";
 
 interface ProductDetailsPageProps {
   params: {
@@ -16,14 +18,19 @@ const ProductDetailsPage = async ({
       slug: slug,
     },
     include: {
-      category: true,
-    },
-  });
-
-  const deals = await prismaClient.products.findMany({
-    where: {
-      discountPercentage: {
-        gt: 0,
+      category: {
+        include: {
+          products: {
+            where: {
+              discountPercentage: {
+                gt: 0,
+              },
+              slug: {
+                not: slug,
+              },
+            },
+          },
+        },
       },
     },
   });
@@ -33,9 +40,13 @@ const ProductDetailsPage = async ({
   }
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8 pb-8">
       <ProductImages product={product} />
-      <ProductInfos product={product} deals={deals} />
+      <ProductInfos product={product} />
+      <SectionTitle className="mb-0 pl-5 font-bold uppercase">
+        Produtos Recomendados
+      </SectionTitle>
+      <ProductList products={product.category.products} />
     </div>
   );
 };
