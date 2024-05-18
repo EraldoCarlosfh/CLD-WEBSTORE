@@ -21,7 +21,8 @@ interface ProductInfosProps {
 }
 
 const ProductInfos = ({
-  product: { name, description, totalPrice, basePrice, discountPercentage }, deals
+  product: { name, description, totalPrice, basePrice, discountPercentage },
+  deals,
 }: ProductInfosProps) => {
   const [quantity, setQuantity] = useState<number>(1);
 
@@ -89,7 +90,7 @@ const ProductInfos = ({
         Adicionar ao carrinho
       </Button>
 
-      <div className="mb-5 flex items-center justify-around rounded-lg bg-accent px-5 py-8">
+      <div className="flex items-center justify-around rounded-lg bg-accent px-5 py-8">
         <div className="flex items-center gap-2">
           <TruckIcon />
           <div className="flex flex-col">
@@ -103,8 +104,10 @@ const ProductInfos = ({
         </div>
         <h1 className="font-semibold">Frete Grátis</h1>
       </div>
-      <div>
-        <SectionTitle>Produtos Recomendados</SectionTitle>
+      <div className="mb-6 mt-5 ">
+        <SectionTitle className="mb-3 pl-2 font-bold uppercase">
+          Produtos Recomendados
+        </SectionTitle>
         <ProductHomeList products={deals} />
       </div>
     </div>
