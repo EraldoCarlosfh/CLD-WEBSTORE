@@ -33,9 +33,9 @@ const HomePage = async () => {
 
   return (
     <div className="flex flex-col gap-8 py-8">
-      <div>        
+      <div>
         <PromoBanner
-          src="/banner_discount.jpg"       
+          src="/banner_discount.jpg"
           alt="Até 55% de desconto esse mês!"
         />
       </div>
@@ -49,9 +49,9 @@ const HomePage = async () => {
         <ProductHomeList products={deals} />
       </div>
 
-      <div>        
+      <div>
         <PromoBanner
-          src="/banner_mouses.jpg"       
+          src="/banner_mouses.jpg"
           alt="Até 55% de desconto em mouses!"
         />
       </div>
@@ -63,7 +63,7 @@ const HomePage = async () => {
 
       <div>
         <PromoBanner
-          src="/banner_phones.jpg"      
+          src="/banner_phones.jpg"
           alt="Até 20% de desconto em fones!"
         />
       </div>

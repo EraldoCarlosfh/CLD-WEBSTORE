@@ -1,15 +1,15 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Products } from "@prisma/client";
 import Image from "next/image";
 import { useState } from "react";
 
 interface ProductImagesProps {
-  imageUrls: string[];
-  productsName: string;
+  product: Pick<Products, "imageUrls" | "name">;
 }
 
-const ProductImages = ({ imageUrls, productsName }: ProductImagesProps) => {
+const ProductImages = ({ product: {name, imageUrls}}: ProductImagesProps) => {
   const [currentImage, setCurrentImage] = useState<string>(imageUrls[0]);
   // setCurrentImage(imageUrls[0]);
 
@@ -23,7 +23,7 @@ const ProductImages = ({ imageUrls, productsName }: ProductImagesProps) => {
         <Image
           className="h-auto max-h-[70%] w-auto max-w-[80%]"
           src={currentImage}
-          alt={productsName}
+          alt={name}
           height={0}
           width={0}
           sizes="100vw"
@@ -34,15 +34,15 @@ const ProductImages = ({ imageUrls, productsName }: ProductImagesProps) => {
         {imageUrls.map((imageUrl) => (
           <Button
             key={imageUrl}
+            onClick={() => handlerImageClick(imageUrl)}
             className={`flex h-[100px] items-center justify-center rounded-lg bg-accent
                 ${imageUrl == currentImage && "border-2 border-solid border-primary"}
             `}
           >
             <Image
               className="h-auto max-h-[70%] w-auto max-w-[80%]"
-              src={imageUrl}
-              onClick={() => handlerImageClick(imageUrl)}
-              alt={productsName}
+              src={imageUrl}              
+              alt={name}
               height={0}
               width={0}
               sizes="100vw"

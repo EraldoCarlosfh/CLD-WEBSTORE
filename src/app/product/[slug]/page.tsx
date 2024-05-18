@@ -1,5 +1,6 @@
 import { prismaClient } from "@/lib/prisma";
 import ProductImages from "./components/product-images";
+import ProductInfos from "./components/product-infos";
 
 interface ProductDetailsPageProps {
   params: {
@@ -7,7 +8,9 @@ interface ProductDetailsPageProps {
   };
 }
 
-const ProductDetailsPage = async ({ params: { slug } }: ProductDetailsPageProps) => {
+const ProductDetailsPage = async ({
+  params: { slug },
+}: ProductDetailsPageProps) => {
   const product = await prismaClient.products.findFirst({
     where: {
       slug: slug,
@@ -17,13 +20,22 @@ const ProductDetailsPage = async ({ params: { slug } }: ProductDetailsPageProps)
     },
   });
 
+  const deals = await prismaClient.products.findMany({
+    where: {
+      discountPercentage: {
+        gt: 0,
+      },
+    },
+  });
+
   if (!product) {
     return null;
   }
 
   return (
     <div className="flex flex-col gap-8">
-        <ProductImages imageUrls={product.imageUrls} productsName={product.name} />
+      <ProductImages product={product} />
+      <ProductInfos product={product} deals={deals} />
     </div>
   );
 };
