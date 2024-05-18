@@ -22,9 +22,6 @@ const ProductDetailsPage = async ({
         include: {
           products: {
             where: {
-              discountPercentage: {
-                gt: 0,
-              },
               slug: {
                 not: slug,
               },
@@ -43,10 +40,10 @@ const ProductDetailsPage = async ({
     <div className="flex flex-col gap-8 pb-8">
       <ProductImages product={product} />
       <ProductInfos product={product} />
-      <SectionTitle className="mb-0 pl-5 font-bold uppercase">
-        Produtos Recomendados
-      </SectionTitle>
-      <ProductList products={product.category.products} />
+      <div>
+        <SectionTitle>Produtos Recomendados</SectionTitle>
+        <ProductList products={product.category.products} />
+      </div>
     </div>
   );
 };
