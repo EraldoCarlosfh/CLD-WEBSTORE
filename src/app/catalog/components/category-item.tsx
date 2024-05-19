@@ -19,13 +19,12 @@ const CategoryItem = ({ category }: CategoryItemProps) => {
           rounded-tr-lg"
         >
           <Image
-            className="mt-4 h-auto max-h-[70%] w-auto max-w-[80%]"
+             className="h-auto max-h-[70%] w-auto max-w-[80%] object-contain"
             src={category.imageUrl}
             alt={category.name}
             width={0}
             height={0}
             sizes="100vw"
-            style={{ objectFit: "contain" }}
           />
         </div>
 

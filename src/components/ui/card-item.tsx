@@ -10,7 +10,8 @@ interface CartItemProps {
 }
 
 const CartItem = ({ product }: CartItemProps) => {
-  const { removeProductsToCart, updateQuantityProduct } = useContext(CartContext);
+  const { removeProductsToCart, updateQuantityProduct } =
+    useContext(CartContext);
 
   function handlerDecreaseQuantityClick() {
     product.quantity -= 1;
@@ -31,13 +32,12 @@ const CartItem = ({ product }: CartItemProps) => {
       <div className="flex items-center gap-4">
         <div className="flex h-[80px] w-[80px] items-center justify-center rounded-lg bg-accent">
           <Image
-            className="h-auto max-h-[70%] w-auto max-w-[80%]"
+            className="h-auto max-h-[70%] w-auto max-w-[80%] object-contain"
             src={product.imageUrls[0]}
             alt={product.name}
             height={0}
             width={0}
             sizes="100vw"
-            style={{ objectFit: "contain" }}
           />
         </div>
         <div className="flex flex-col">
@@ -86,7 +86,7 @@ const CartItem = ({ product }: CartItemProps) => {
         className="flex items-center"
       >
         <Trash2 size={16}></Trash2>
-      </Button>   
+      </Button>
     </div>
   );
 };

@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/badge";
 import IconBadge from "@/components/ui/icon-badge";
 import ProductItem from "@/components/ui/product-item";
 import { CATEGORY_ICON } from "@/constants/category-icon";

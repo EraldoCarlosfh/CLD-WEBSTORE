@@ -19,13 +19,12 @@ const ProductImages = ({ product: {name, imageUrls}}: ProductImagesProps) => {
     <div className="flex flex-col">
       <div className="flex h-[23.75rem] w-full items-center justify-center bg-accent">
         <Image
-          className="h-auto max-h-[70%] w-auto max-w-[80%]"
+          className="h-auto max-h-[70%] w-auto max-w-[80%] object-contain"
           src={currentImage}
           alt={name}
           height={0}
           width={0}
           sizes="100vw"
-          style={{ objectFit: "contain" }}
         />
       </div>
       <div className="mt-8 grid grid-cols-4 gap-4 px-5 ">
@@ -38,13 +37,12 @@ const ProductImages = ({ product: {name, imageUrls}}: ProductImagesProps) => {
             `}
           >
             <Image
-              className="h-auto max-h-[70%] w-auto max-w-[80%]"
+              className="h-auto max-h-[70%] w-auto max-w-[80%] object-contain"
               src={imageUrl}              
               alt={name}
               height={0}
               width={0}
               sizes="100vw"
-              style={{ objectFit: "contain" }}
             />
           </Button>
         ))}

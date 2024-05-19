@@ -1,6 +1,6 @@
 "use client";
 import { Products } from "@prisma/client";
-import React, { createContext, useMemo, useState } from "react";
+import React, { createContext, useEffect, useMemo, useState } from "react";
 
 export interface CartProduct extends Products {
   quantity: number;
@@ -41,7 +41,7 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
     }, 0);
   }, [products]);
 
-  const totalDiscount =  subTotal - total;
+  const totalDiscount = subTotal - total;
 
   function updateQuantityProduct(product: CartProduct) {
     setProducts((prev) =>
@@ -81,11 +81,32 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     setProducts((prev) => [...prev, product]);
+    var productsStorage: Products[] = JSON.parse(
+      localStorage.getItem("@cld-webstore/cart-products") || "[]",
+    );
+    if (productsStorage) {
+      productsStorage.push(product);
+      localStorage.setItem(
+        "@cld-webstore/cart-products",
+        JSON.stringify(productsStorage),
+      );
+    } else {
+      localStorage.setItem(
+        "@cld-webstore/cart-products",
+        JSON.stringify(products),
+      );
+    }
   };
 
   const removeProductsToCart = (productId: string) => {
     setProducts((prev) => prev.filter((product) => product.id != productId));
   };
+
+  useEffect(() => {
+    setProducts(
+      JSON.parse(localStorage.getItem("@cld-webstore/cart-products") || "[]"),
+    );
+  }, []);
 
   return (
     <CartContext.Provider
