@@ -14,9 +14,9 @@ datasource db {
 }
 
 model Categorys {
-  id String @id @default(uuid())
-  name String
-  slug String
+  id       String     @id @default(uuid())
+  name     String
+  slug     String
   imageUrl String
   products Products[]
 
@@ -24,50 +24,81 @@ model Categorys {
 }
 
 model Products {
-  id String @id @default(uuid())
-  name String
-  slug String
-  description String
-  basePrice Decimal @db.Decimal(8,2)
-  imageUrls String[]
-  categoryId String
-  category Categorys @relation(fields: [categoryId], references: [id])
-  discountPercentage Int @default(0)
-  totalPrice Decimal @db.Decimal(8,2)
+  id                 String           @id @default(uuid())
+  name               String
+  slug               String
+  description        String
+  basePrice          Decimal          @db.Decimal(8, 2)
+  imageUrls          String[]
+  categoryId         String
+  category           Categorys        @relation(fields: [categoryId], references: [id])
+  discountPercentage Int              @default(0)
+  totalPrice         Decimal          @db.Decimal(8, 2)
+  OrdersProducts     OrdersProducts[]
 
   @@map("products")
 }
 
+model Orders {
+  id             String           @id @default(uuid())
+  userId         String
+  users          User             @relation(fields: [userId], references: [id])
+  ordersProducts OrdersProducts[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @default(now()) @updatedAt
+  status         OrderStatus      @default(WAITING_FOR_PAYMENT)
+
+  @@map("orders")
+}
+
+enum OrderStatus {
+  WAITING_FOR_PAYMENT
+  PAYMENT_CONFIRMED
+}
+
+model OrdersProducts {
+  id                 String   @id @default(uuid())
+  productId          String
+  products           Products @relation(fields: [productId], references: [id])
+  orderId            String
+  orders             Orders   @relation(fields: [orderId], references: [id])
+  basePrice          Decimal  @db.Decimal(8, 2)
+  discountPercentage Int      @default(0)
+  quantity           Int      @default(0)
+
+  @@map("ordersProducts")
+}
+
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String  @map("user_id")
-  type               String
-  provider           String
-  providerAccountId  String  @map("provider_account_id")
-  refresh_token      String? @db.Text
-  access_token       String? @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String? @db.Text
-  session_state      String?
- 
+  id                String  @id @default(cuid())
+  userId            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+
   @@unique([provider, providerAccountId])
   @@map("accounts")
 }
- 
+
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique @map("session_token")
   userId       String   @map("user_id")
   expires      DateTime
-  user         User    @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@map("sessions")
 }
- 
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -76,15 +107,16 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
- 
+  Orders        Orders[]
+
   @@map("users")
 }
- 
+
 model VerificationToken {
   identifier String
   token      String
   expires    DateTime
- 
+
   @@unique([identifier, token])
   @@map("verificationtokens")
 }

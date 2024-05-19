@@ -2,7 +2,7 @@ import { Products } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import DiscountBadge from "./discount-badge";
-import { cn } from "@/lib/utils";
+import { cn, formatedPrice } from "@/lib/utils";
 import {
   TooltipProvider,
   Tooltip,
@@ -53,17 +53,11 @@ const ProductItem = ({ product, className }: ProductItemProps) => {
           </p>
           <div className="flex items-center gap-2">
             <p className="text-sm font-semibold">
-              {Number(product.totalPrice.toString()).toLocaleString("pt-br", {
-                style: "currency",
-                currency: "BRL",
-              })}
+              {formatedPrice(Number(product.totalPrice))}
             </p>
             {product.discountPercentage > 0 && (
               <span className="overflow-hidden text-ellipsis whitespace-nowrap text-xs line-through opacity-75">
-                {Number(product.basePrice.toString()).toLocaleString("pt-br", {
-                  style: "currency",
-                  currency: "BRL",
-                })}
+                {formatedPrice(Number(product.basePrice))}
               </span>
             )}
           </div>

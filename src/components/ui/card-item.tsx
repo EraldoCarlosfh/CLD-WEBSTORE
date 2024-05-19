@@ -4,6 +4,7 @@ import { CartContext } from "@/providers/cart";
 import { Button } from "./button";
 import Image from "next/image";
 import { ArrowLeftIcon, ArrowRightIcon, Trash2 } from "lucide-react";
+import { formatedPrice } from "@/lib/utils";
 
 interface CartItemProps {
   product: CartProduct;
@@ -44,17 +45,11 @@ const CartItem = ({ product }: CartItemProps) => {
           <p className="text-xs font-light">{product.name}</p>
           <div className="flex items-center gap-2">
             <p className="text-sm font-bold">
-              {Number(product.totalPrice.toString()).toLocaleString("pt-br", {
-                style: "currency",
-                currency: "BRL",
-              })}
+              {formatedPrice(Number(product.totalPrice))}
             </p>
             {product.discountPercentage > 0 && (
               <p className="text-xs line-through opacity-75">
-                {Number(product.basePrice.toString()).toLocaleString("pt-br", {
-                  style: "currency",
-                  currency: "BRL",
-                })}
+                {formatedPrice(Number(product.basePrice))}
               </p>
             )}
           </div>
@@ -79,14 +74,16 @@ const CartItem = ({ product }: CartItemProps) => {
           </div>
         </div>
       </div>
-      <Button
-        size="icon"
-        variant="outline"
-        onClick={() => handlerRemoveProductClick(product.id)}
-        className="flex items-center"
-      >
-        <Trash2 size={16}></Trash2>
-      </Button>
+      <div className="pr-3">
+        <Button
+          size="icon"
+          variant="outline"
+          onClick={() => handlerRemoveProductClick(product.id)}
+          className="flex items-center"
+        >
+          <Trash2 size={16}></Trash2>
+        </Button>
+      </div>
     </div>
   );
 };

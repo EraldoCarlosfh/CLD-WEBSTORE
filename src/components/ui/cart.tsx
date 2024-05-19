@@ -5,70 +5,104 @@ import { CartContext } from "@/providers/cart";
 import CartItem from "./card-item";
 import { Button } from "./button";
 import { Separator } from "./separator";
+import CartPrice from "./cart-price";
+import { useSession } from "next-auth/react";
+import { ScrollArea } from "./scroll-area";
+
 
 const Cart = () => {
-  const { products, cartTotalPrice, cartBasePrice, cartTotalDiscount } =
-    useContext(CartContext);
+  const { data } = useSession();
+  const { products, subTotal, totalDiscount, total } = useContext(CartContext);
+
+  const handleFinishPurchaseClick = async () => {
+    if (!data?.user) {
+      // TODO: redirecionar para o login
+      return;
+    }
+
+    // const order = await createOrder(products, (data?.user as any).id);
+
+    // const checkout = await createCheckout(products, order.id);
+
+    // const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
+
+    // Criar pedido no banco
+
+    //  stripe?.redirectToCheckout({
+    //   sessionId: checkout.id,
+    // });
+  };
+
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex h-full flex-col gap-8">
       <IconBadge variant="outline">
         <ShoppingCart size={16} />
         Carrinho
       </IconBadge>
 
-      <div className="flex flex-col gap-5">
-        {products.map((product) => (
-          <CartItem key={product.id} product={product} />
-        ))}
+      {/* RENDERIZAR OS PRODUTOS */}
+      <div className="flex h-full max-h-full flex-col gap-5 overflow-hidden">
+        <ScrollArea className="h-full">
+          <div className="flex h-full flex-col gap-8">
+            {products.length > 0 ? (
+              products.map((product) => (
+                <CartItem
+                  key={product.id}
+                  product={{
+                    ...product,
+                    totalPrice: product.totalPrice,
+                  }}
+                />
+              ))
+            ) : (
+              <p className="text-center font-semibold">
+                Carrinho vazio. Vamos fazer compras?
+              </p>
+            )}
+          </div>
+        </ScrollArea>
       </div>
-      <div className="flex flex-col gap-2 text-xs opacity-80">
-        <Separator />
-        <div className="flex justify-between font-light">
-          <span>Subtotal</span>
-          <span>           
-            {cartBasePrice.toLocaleString("pt-br", {
-              style: "currency",
-              currency: "BRL",
-            })}
-          </span>
+
+      {products.length > 0 && (
+        <div className="flex flex-col gap-3">
+          <Separator />
+          <CartPrice
+            className={"items-center text-xs lg:text-sm"}
+            price={subTotal}
+            title={"Subtotal"}
+            isDiscount={false}
+          />
+          <Separator />
+          <CartPrice
+            className={"items-center text-xs lg:text-sm"}
+            price={"Grátis"}
+            title={"Entrega"}
+            isDiscount={false}
+          />
+          <Separator />
+          <CartPrice
+            className={"items-center text-xs lg:text-sm"}
+            price={totalDiscount}
+            title={"Descontos"}
+            isDiscount={true}
+          />
+          <Separator />
+          <CartPrice
+            className={"items-center text-xs lg:text-sm"}
+            price={total}
+            title={"Total"}
+            isDiscount={false}
+          />
+
+          <Button
+            className="mt-7 font-bold uppercase"
+            onClick={handleFinishPurchaseClick}
+          >
+            Finalizar compra
+          </Button>
         </div>
-        <Separator />
-        <div className="flex justify-between font-light">
-          <span>Entrega</span>
-          <span className="uppercase">R$ Grátis</span>
-        </div>
-        <Separator />
-        <div className="flex justify-between font-light">
-          <span>Descontos</span>
-          <span>
-            -
-            {cartTotalDiscount.toLocaleString("pt-br", {
-              style: "currency",
-              currency: "BRL",
-            })}
-          </span>
-        </div>
-        <Separator />
-        <div className="flex justify-between font-semibold">
-          <span>Total</span>
-          <span>           
-            {cartTotalPrice.toLocaleString("pt-br", {
-              style: "currency",
-              currency: "BRL",
-            })}
-          </span>
-        </div>
-      </div>
-      <div className="flex items-center justify-center">
-        <Button
-          className="w-full rounded-xl font-bold uppercase"
-          variant="default"
-        >
-          Finalizar Compra
-        </Button>
-      </div>
+      )}
     </div>
   );
 };
-
 export default Cart;

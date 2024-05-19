@@ -6,6 +6,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import { useContext, useState } from "react";
 import Image from "next/image";
 import { CartContext } from "@/providers/cart";
+import { formatedPrice } from "@/lib/utils";
 
 interface ProductInfosProps {
   product: Products;
@@ -27,7 +28,7 @@ const ProductInfos = ({ product }: ProductInfosProps) => {
   }
 
   function handlerAddProductCartClick(product: Products) {
-    addProductsToCart({...product, quantity});
+    addProductsToCart({ ...product, quantity });   
   }
 
   return (
@@ -35,10 +36,7 @@ const ProductInfos = ({ product }: ProductInfosProps) => {
       <h2 className="text-lg">{product.name}</h2>
       <div className="flex items-center gap-2">
         <h1 className="text-xl font-bold">
-          {Number(product.totalPrice.toString()).toLocaleString("pt-br", {
-            style: "currency",
-            currency: "BRL",
-          })}
+          {formatedPrice(Number(product.totalPrice))}
         </h1>
         {product.discountPercentage > 0 && (
           <DiscountBadge>{product.discountPercentage}</DiscountBadge>
@@ -46,10 +44,7 @@ const ProductInfos = ({ product }: ProductInfosProps) => {
       </div>
       {product.discountPercentage > 0 && (
         <p className="text-sm line-through opacity-75">
-          {Number(product.basePrice.toString()).toLocaleString("pt-br", {
-            style: "currency",
-            currency: "BRL",
-          })}
+          {formatedPrice(Number(product.basePrice))}
         </p>
       )}
       <div className="mt-4 flex items-center gap-3">
@@ -96,7 +91,7 @@ const ProductInfos = ({ product }: ProductInfosProps) => {
             <p className="text-xs">
               Entrega via <span className="font-bold italic">CLDPacket®</span>
             </p>
-            <p className="text-freight text-xs">
+            <p className="text-xs text-freight">
               Envio para <span className="font-bold">todo Brasil</span>
             </p>
           </div>

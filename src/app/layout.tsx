@@ -1,17 +1,13 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/ui/header";
 import Footer from "@/components/ui/footer";
 import { AuthProvider } from "@/providers/auth";
 import CartProvider from "@/providers/cart";
+import ToastProvider from "@/providers/toast";
 
-const poppins = Poppins({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-poppins",
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-});
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "CLD Web Store",
@@ -25,13 +21,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt">
-      <body className={poppins.className}>
+      <body className={inter.className}>
         <div className="flex h-full flex-col">
           <AuthProvider>
             <CartProvider>
-              <Header />
-              <div className="flex-1">{children}</div>
-              <Footer />
+              <ToastProvider>
+                <Header />
+                <div className="flex-1">{children}</div>
+                <Footer />
+              </ToastProvider>
             </CartProvider>
           </AuthProvider>
         </div>

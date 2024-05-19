@@ -1,6 +1,7 @@
 "use client";
 import { Products } from "@prisma/client";
 import React, { createContext, useEffect, useMemo, useState } from "react";
+import { toast } from "react-toastify";
 
 export interface CartProduct extends Products {
   quantity: number;
@@ -8,6 +9,9 @@ export interface CartProduct extends Products {
 
 interface ICartContext {
   products: CartProduct[];
+  total: number;
+  subTotal: number;
+  totalDiscount: number;
   cartTotalPrice: number;
   cartBasePrice: number;
   cartTotalDiscount: number;
@@ -18,6 +22,9 @@ interface ICartContext {
 
 export const CartContext = createContext<ICartContext>({
   products: [],
+  total: 0,
+  subTotal: 0,
+  totalDiscount: 0,
   cartTotalPrice: 0,
   cartBasePrice: 0,
   cartTotalDiscount: 0,
@@ -56,7 +63,7 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
           return cartProduct;
         })
         .filter((cartProduct) => cartProduct.quantity > 0),
-    );
+    ); 
     return;
   }
 
@@ -80,33 +87,37 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
       return;
     }
 
+    toast.success(`${product.name} adicionado ao carrinho com sucesso!`, {
+      position: "top-right",
+      autoClose: 2000,
+      theme: "dark",
+      pauseOnHover: false,
+    });
+
     setProducts((prev) => [...prev, product]);
-    var productsStorage: Products[] = JSON.parse(
-      localStorage.getItem("@cld-webstore/cart-products") || "[]",
-    );
-    if (productsStorage) {
-      productsStorage.push(product);
-      localStorage.setItem(
-        "@cld-webstore/cart-products",
-        JSON.stringify(productsStorage),
-      );
-    } else {
-      localStorage.setItem(
-        "@cld-webstore/cart-products",
-        JSON.stringify(products),
-      );
-    }
   };
 
   const removeProductsToCart = (productId: string) => {
+    const product = products.find((product) => product.id == productId)?.name;
     setProducts((prev) => prev.filter((product) => product.id != productId));
+
+    toast.success(`${product} removido do carrinho com sucesso!`, {
+      position: "top-right",
+      autoClose: 2000,
+      theme: "dark",
+      pauseOnHover: false,
+    });
   };
 
   useEffect(() => {
     setProducts(
-      JSON.parse(localStorage.getItem("@cld-webstore/cart-products") || "[]"),
+      JSON.parse(localStorage.getItem("@fsw-store/cart-products") || "[]"),
     );
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("@fsw-store/cart-products", JSON.stringify(products));
+  }, [products]);
 
   return (
     <CartContext.Provider
@@ -115,9 +126,12 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
         addProductsToCart,
         updateQuantityProduct,
         removeProductsToCart,
-        cartTotalPrice: total,
-        cartBasePrice: subTotal,
-        cartTotalDiscount: totalDiscount,
+        total,
+        subTotal,
+        totalDiscount,
+        cartTotalPrice: 0,
+        cartBasePrice: 0,
+        cartTotalDiscount: 0,
       }}
     >
       {children}
