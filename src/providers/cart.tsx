@@ -68,7 +68,7 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const removeProductsToCart = (productId: string) => {
-    setProducts(products.filter((product) => product.id != productId));
+    setProducts(prev => prev.filter((product) => product.id != productId));
   };
 
   return (
