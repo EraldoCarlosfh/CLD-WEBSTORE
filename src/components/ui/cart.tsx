@@ -8,7 +8,9 @@ import { Separator } from "./separator";
 import CartPrice from "./cart-price";
 import { useSession } from "next-auth/react";
 import { ScrollArea } from "./scroll-area";
-
+import { createOrder } from "@/actions/order";
+import { createCheckout } from "@/actions/checkout";
+import { loadStripe } from "@stripe/stripe-js";
 
 const Cart = () => {
   const { data } = useSession();
@@ -20,18 +22,24 @@ const Cart = () => {
       return;
     }
 
-    // const order = await createOrder(products, (data?.user as any).id);
+    const order = await createOrder(products, "clw0a1eba0000kiujvjv4mkpr");
 
-    // const checkout = await createCheckout(products, order.id);
+    console.log('Order: ', order);
 
-    // const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
+    const checkout = await createCheckout(products, order.id);
+
+    console.log('Checkout: ', checkout);
+
+    const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
+
+    console.log('Stripe: ', stripe);
 
     // Criar pedido no banco
 
-    //  stripe?.redirectToCheckout({
-    //   sessionId: checkout.id,
-    // });
-  };
+    stripe?.redirectToCheckout({
+      sessionId: checkout.id,
+    });
+  }
 
   return (
     <div className="flex h-full flex-col gap-8">

@@ -21,16 +21,36 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import Link from "next/link";
 import Cart from "./cart";
+import { toast } from "react-toastify";
 
 const Header = () => {
   const { status, data } = useSession();
 
   const handlerLoginClick = async () => {
-    await signIn();
+    await signIn().then(result => {
+      result;
+    }).finally(() => {
+      toast.success(`Login efetuado com sucesso!`, {
+        position: "top-right",
+        autoClose: 2000,
+        theme: "dark",
+        pauseOnHover: false,
+      });
+    });
   };
 
   const handlerLogoutClick = async () => {
-    await signOut();
+    await signOut().then(result => {
+      result;
+    }).finally(() => {
+      localStorage.removeItemItem("@fsw-store/cart-products");
+      toast.success(`Logout efetuado com sucesso!`, {
+        position: "top-right",
+        autoClose: 2000,
+        theme: "dark",
+        pauseOnHover: false,
+      });
+    });
   };
   return (
     <Card className="flex items-center justify-between p-[1.875rem]">
@@ -68,12 +88,12 @@ const Header = () => {
           )}
 
           <div className="mt-2 flex flex-col gap-2">
-            {status == "authenticated" ? (
+            {status == "unauthenticated" ? (
               <SheetClose asChild>
                 <Button
                   size="icon"
                   variant="default"
-                  onClick={() => handlerLoginClick}
+                  onClick={handlerLoginClick}
                   className="w-full justify-start gap-1.5 p-2"
                 >
                   <LogInIcon size={16} />
@@ -86,7 +106,7 @@ const Header = () => {
                   <Button
                     size="icon"
                     variant="destructive"
-                    onClick={() => handlerLogoutClick}
+                    onClick={handlerLogoutClick}
                     className="w-full justify-start gap-1.5 p-2"
                   >
                     <LogOutIcon size={16}></LogOutIcon>Sair
@@ -144,7 +164,7 @@ const Header = () => {
         </SheetTrigger>
         <SheetContent>
           <SheetClose asChild>
-           <Cart />
+            <Cart />
           </SheetClose>
         </SheetContent>
       </Sheet>
