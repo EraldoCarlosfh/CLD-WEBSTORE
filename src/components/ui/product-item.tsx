@@ -45,14 +45,14 @@ const ProductItem = ({ product }: ProductItemProps) => {
           </p>
           <div className="flex items-center gap-2">
             <p className="text-sm font-semibold">
-              {Number(product.totalPrice).toLocaleString("pt-br", {
+              {Number(product.totalPrice.toString()).toLocaleString("pt-br", {
                 style: "currency",
                 currency: "BRL",
               })}
             </p>
             {product.discountPercentage > 0 && (
               <span className="overflow-hidden text-ellipsis whitespace-nowrap text-xs line-through opacity-75">
-                {Number(product.basePrice).toLocaleString("pt-br", {
+                {Number(product.basePrice.toString()).toLocaleString("pt-br", {
                   style: "currency",
                   currency: "BRL",
                 })}

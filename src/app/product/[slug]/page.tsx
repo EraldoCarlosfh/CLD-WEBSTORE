@@ -34,7 +34,7 @@ const ProductDetailsPage = async ({
 
   if (!product) {
     return null;
-  }
+  } 
 
   return (
     <div className="flex flex-col gap-8 pb-8">

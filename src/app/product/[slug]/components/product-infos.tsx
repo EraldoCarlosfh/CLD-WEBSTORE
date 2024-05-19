@@ -2,12 +2,9 @@
 import { Button } from "@/components/ui/button";
 import DiscountBadge from "@/components/ui/discount-bagde";
 import { Products } from "@prisma/client";
-import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  TruckIcon,
-} from "lucide-react";
+import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import { useState } from "react";
+import Image from "next/image";
 
 interface ProductInfosProps {
   product: Pick<
@@ -20,6 +17,7 @@ const ProductInfos = ({
   product: { name, description, totalPrice, basePrice, discountPercentage },
 }: ProductInfosProps) => {
   const [quantity, setQuantity] = useState<number>(1);
+  const [currentImage, setCurrentImage] = useState<string>('https://xarwas4csfe8g80s.public.blob.vercel-storage.com/fast-freight-NcnClOCGNz1vxkrPPLimyUyCvIdYwD.png');
 
   function handlerDecreaseQuantityClick() {
     setQuantity((prev) => (prev == 1 ? prev : prev - 1));
@@ -34,7 +32,7 @@ const ProductInfos = ({
       <h2 className="text-lg">{name}</h2>
       <div className="flex items-center gap-2">
         <h1 className="text-xl font-bold">
-          {Number(totalPrice).toLocaleString("pt-br", {
+          {Number(totalPrice.toString()).toLocaleString("pt-br", {
             style: "currency",
             currency: "BRL",
           })}
@@ -45,7 +43,7 @@ const ProductInfos = ({
       </div>
       {discountPercentage > 0 && (
         <p className="text-sm line-through opacity-75">
-          {Number(basePrice).toLocaleString("pt-br", {
+          {Number(basePrice.toString()).toLocaleString("pt-br", {
             style: "currency",
             currency: "BRL",
           })}
@@ -82,9 +80,15 @@ const ProductInfos = ({
         Adicionar ao carrinho
       </Button>
 
-      <div className="flex items-center justify-around rounded-lg bg-accent px-5 py-8">
+      <div className="flex items-center justify-between rounded-lg bg-accent px-5 py-8">
         <div className="flex items-center gap-2">
-          <TruckIcon />
+          <Image
+            src={currentImage}
+            alt="Caminhão de frete"
+            height={0}
+            width={60}
+            sizes="100vw"
+          />
           <div className="flex flex-col">
             <p className="text-xs">
               Entrega via <span className="font-bold italic">CLDPacket®</span>
@@ -94,7 +98,7 @@ const ProductInfos = ({
             </p>
           </div>
         </div>
-        <h1 className="font-semibold">Frete Grátis</h1>
+        <h1 className="font-semibold pr-4">Frete Grátis</h1>
       </div>
     </div>
   );
