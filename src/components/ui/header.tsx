@@ -1,5 +1,4 @@
 "use client";
-
 import {
   HomeIcon,
   ListOrderedIcon,
@@ -21,8 +20,6 @@ import {
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import Link from "next/link";
-import imageUser from '../../../public/user.jpg';
-import Image from "next/image";
 
 const Header = () => {
   const { status, data } = useSession();

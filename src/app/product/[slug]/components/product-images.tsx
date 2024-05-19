@@ -1,5 +1,4 @@
 "use client";
-
 import { Button } from "@/components/ui/button";
 import { Products } from "@prisma/client";
 import Image from "next/image";
