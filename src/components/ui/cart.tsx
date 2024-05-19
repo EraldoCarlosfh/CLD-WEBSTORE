@@ -25,7 +25,12 @@ const Cart = () => {
         <Separator />
         <div className="flex justify-between font-light">
           <span>Subtotal</span>
-          <span>R$ {cartBasePrice}</span>
+          <span>           
+            {cartBasePrice.toLocaleString("pt-br", {
+              style: "currency",
+              currency: "BRL",
+            })}
+          </span>
         </div>
         <Separator />
         <div className="flex justify-between font-light">
@@ -35,12 +40,23 @@ const Cart = () => {
         <Separator />
         <div className="flex justify-between font-light">
           <span>Descontos</span>
-          <span>- R$ {cartTotalDiscount}</span>
+          <span>
+            -
+            {cartTotalDiscount.toLocaleString("pt-br", {
+              style: "currency",
+              currency: "BRL",
+            })}
+          </span>
         </div>
         <Separator />
         <div className="flex justify-between font-semibold">
           <span>Total</span>
-          <span>R$ {cartTotalPrice}</span>
+          <span>           
+            {cartTotalPrice.toLocaleString("pt-br", {
+              style: "currency",
+              currency: "BRL",
+            })}
+          </span>
         </div>
       </div>
       <div className="flex items-center justify-center">
