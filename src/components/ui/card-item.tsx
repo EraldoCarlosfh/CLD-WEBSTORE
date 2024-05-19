@@ -1,9 +1,8 @@
 import { CartProduct } from "@/providers/cart";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { CartContext } from "@/providers/cart";
 import { Button } from "./button";
 import Image from "next/image";
-import { Products } from "@prisma/client";
 import { ArrowLeftIcon, ArrowRightIcon, Trash2 } from "lucide-react";
 
 interface CartItemProps {
@@ -11,7 +10,7 @@ interface CartItemProps {
 }
 
 const CartItem = ({ product }: CartItemProps) => {
-  const { removeProductsToCart, addProductsToCart, updateQuantityProduct } = useContext(CartContext);
+  const { removeProductsToCart, updateQuantityProduct } = useContext(CartContext);
 
   function handlerDecreaseQuantityClick() {
     product.quantity -= 1;
@@ -27,9 +26,6 @@ const CartItem = ({ product }: CartItemProps) => {
     removeProductsToCart(productId);
   };
 
-  function handlerAddProductCartClick(product: Products, quantity: number) {
-    addProductsToCart({ ...product, quantity });
-  }
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-4">
