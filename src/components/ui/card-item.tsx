@@ -86,7 +86,7 @@ const CartItem = ({ product }: CartItemProps) => {
         className="flex items-center"
       >
         <Trash2 size={16}></Trash2>
-      </Button>
+      </Button>   
     </div>
   );
 };
