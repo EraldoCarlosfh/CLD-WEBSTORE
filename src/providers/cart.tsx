@@ -32,18 +32,15 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
   function updateQuantityProduct(product: CartProduct) {
     setProducts((prev) =>
       prev.map((cartProduct) => {
-        if (cartProduct.id == product.id && product.quantity != 0) {
-          return {
-            ...cartProduct,
-            quantity: product.quantity,
-          };
-        }
-        return cartProduct.quantity == 0
-          ? {
+        if (cartProduct.id == product.id) {
+          if (product.quantity != 0)
+            return {
               ...cartProduct,
-              quantity: 1,
-            }
-          : cartProduct;
+              quantity: product.quantity,
+            };
+          else setProducts(products.filter((x) => x.id != product.id));
+        }
+        return cartProduct;
       }),
     );
     return;
