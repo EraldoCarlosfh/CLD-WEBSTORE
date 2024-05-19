@@ -1,23 +1,22 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import DiscountBadge from "@/components/ui/discount-bagde";
+import DiscountBadge from "@/components/ui/discount-badge";
 import { Products } from "@prisma/client";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Image from "next/image";
+import { CartContext } from "@/providers/cart";
 
 interface ProductInfosProps {
-  product: Pick<
-    Products,
-    "name" | "description" | "totalPrice" | "basePrice" | "discountPercentage"
-  >;
+  product: Products;
 }
 
-const ProductInfos = ({
-  product: { name, description, totalPrice, basePrice, discountPercentage },
-}: ProductInfosProps) => {
+const ProductInfos = ({ product }: ProductInfosProps) => {
   const [quantity, setQuantity] = useState<number>(1);
-  const [currentImage, setCurrentImage] = useState<string>('https://xarwas4csfe8g80s.public.blob.vercel-storage.com/fast-freight-NcnClOCGNz1vxkrPPLimyUyCvIdYwD.png');
+  const { addProductsToCart } = useContext(CartContext);
+  const [currentImage] = useState<string>(
+    "https://xarwas4csfe8g80s.public.blob.vercel-storage.com/fast-freight-NcnClOCGNz1vxkrPPLimyUyCvIdYwD.png",
+  );
 
   function handlerDecreaseQuantityClick() {
     setQuantity((prev) => (prev == 1 ? prev : prev - 1));
@@ -27,23 +26,27 @@ const ProductInfos = ({
     setQuantity((prev) => prev + 1);
   }
 
+  function handlerAddProductCartClick(product: Products) {
+    addProductsToCart({...product, quantity});
+  }
+
   return (
     <div className="flex flex-col px-5">
-      <h2 className="text-lg">{name}</h2>
+      <h2 className="text-lg">{product.name}</h2>
       <div className="flex items-center gap-2">
         <h1 className="text-xl font-bold">
-          {Number(totalPrice.toString()).toLocaleString("pt-br", {
+          {Number(product.totalPrice.toString()).toLocaleString("pt-br", {
             style: "currency",
             currency: "BRL",
           })}
         </h1>
-        {discountPercentage > 0 && (
-          <DiscountBadge>{discountPercentage}</DiscountBadge>
+        {product.discountPercentage > 0 && (
+          <DiscountBadge>{product.discountPercentage}</DiscountBadge>
         )}
       </div>
-      {discountPercentage > 0 && (
+      {product.discountPercentage > 0 && (
         <p className="text-sm line-through opacity-75">
-          {Number(basePrice.toString()).toLocaleString("pt-br", {
+          {Number(product.basePrice.toString()).toLocaleString("pt-br", {
             style: "currency",
             currency: "BRL",
           })}
@@ -69,13 +72,13 @@ const ProductInfos = ({
       <div className="mt-8 flex flex-col gap-3">
         <h1 className="text-lg">Descrição</h1>
         <p className="whitespace-pre-line text-justify text-sm font-light opacity-60">
-          {description}
+          {product.description}
         </p>
       </div>
 
       <Button
         className="mb-5 mt-4 font-semibold uppercase"
-        onClick={() => quantity}
+        onClick={() => handlerAddProductCartClick(product)}
       >
         Adicionar ao carrinho
       </Button>
@@ -98,7 +101,7 @@ const ProductInfos = ({
             </p>
           </div>
         </div>
-        <h1 className="font-semibold pr-4">Frete Grátis</h1>
+        <h1 className="pr-4 font-semibold">Frete Grátis</h1>
       </div>
     </div>
   );

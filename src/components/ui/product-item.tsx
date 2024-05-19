@@ -1,7 +1,7 @@
 import { Products } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
-import DiscountBadge from "./discount-bagde";
+import DiscountBadge from "./discount-badge";
 
 interface ProductItemProps {
   product: Products;

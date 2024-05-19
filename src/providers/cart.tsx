@@ -1,8 +1,8 @@
 "use client";
 import { Products } from "@prisma/client";
-import React, { createContext } from "react";
+import React, { createContext, useState } from "react";
 
-interface CartProduct extends Products {
+export interface CartProduct extends Products {
   quantity: number;
 }
 
@@ -11,20 +11,78 @@ interface ICartContext {
   cartTotalPrice: number;
   cartBasePrice: number;
   cartTotalDiscount: number;
+  addProductsToCart: (product: CartProduct) => void;
+  updateQuantityProduct: (product: CartProduct) => void;
+  removeProductsToCart: (productId: string) => void;
 }
 
-const CartContext = createContext<ICartContext>({
+export const CartContext = createContext<ICartContext>({
   products: [],
   cartTotalPrice: 0,
   cartBasePrice: 0,
   cartTotalDiscount: 0,
+  addProductsToCart: () => {},
+  updateQuantityProduct: () => {},
+  removeProductsToCart: () => {},
 });
 
-const CartProvider = ({children}: {children: React.ReactNode}) => {
+const CartProvider = ({ children }: { children: React.ReactNode }) => {
+  const [products, setProducts] = useState<CartProduct[]>([]);
+
+  function updateQuantityProduct(product: CartProduct) {
+    setProducts((prev) =>
+      prev.map((cartProduct) => {
+        if (cartProduct.id == product.id && product.quantity != 0) {
+          return {
+            ...cartProduct,
+            quantity: product.quantity,
+          };
+        }
+        return cartProduct.quantity == 0
+          ? {
+              ...cartProduct,
+              quantity: 1,
+            }
+          : cartProduct;
+      }),
+    );
+    return;
+  }
+
+  const addProductsToCart = (product: CartProduct) => {
+    const productIsAlreadyOnCart = products.some(
+      (cartProduct) => cartProduct.id == product.id,
+    );
+
+    if (productIsAlreadyOnCart) {
+      setProducts((prev) =>
+        prev.map((cartProduct) => {
+          if (cartProduct.id == product.id) {
+            return {
+              ...cartProduct,
+              quantity: cartProduct.quantity + product.quantity,
+            };
+          }
+          return cartProduct;
+        }),
+      );
+      return;
+    }
+
+    setProducts((prev) => [...prev, product]);
+  };
+
+  const removeProductsToCart = (productId: string) => {
+    setProducts(products.filter((product) => product.id != productId));
+  };
+
   return (
     <CartContext.Provider
       value={{
-        products: [],
+        products,
+        addProductsToCart,
+        updateQuantityProduct,
+        removeProductsToCart,
         cartTotalPrice: 0,
         cartBasePrice: 0,
         cartTotalDiscount: 0,

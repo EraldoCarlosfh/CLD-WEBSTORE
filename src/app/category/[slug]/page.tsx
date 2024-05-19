@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import IconBadge from "@/components/ui/icon-badge";
 import ProductItem from "@/components/ui/product-item";
 import { CATEGORY_ICON } from "@/constants/category-icon";
 import { prismaClient } from "@/lib/prisma";
@@ -8,7 +9,9 @@ interface CategoryProductsPageProps {
   };
 }
 
-const CategoryProductsPage = async ({params: { slug },}: CategoryProductsPageProps) => {
+const CategoryProductsPage = async ({
+  params: { slug },
+}: CategoryProductsPageProps) => {
   const category = await prismaClient.categorys.findFirst({
     where: {
       slug: slug,
@@ -24,13 +27,10 @@ const CategoryProductsPage = async ({params: { slug },}: CategoryProductsPagePro
 
   return (
     <div className="flex flex-col gap-8 p-5">
-      <Badge
-        className="w-fit gap-1 border-2 border-primary px-3 py-[0.372rem] text-base uppercase"
-        variant="outline"
-      >
+      <IconBadge variant="outline">
         {CATEGORY_ICON[slug as keyof typeof CATEGORY_ICON]}
         {category.name}
-      </Badge>
+      </IconBadge>
 
       <div className="grid grid-cols-2 gap-8">
         {category.products.map((product) => (

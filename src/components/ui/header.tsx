@@ -20,6 +20,7 @@ import {
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import Link from "next/link";
+import Cart from "./cart";
 
 const Header = () => {
   const { status, data } = useSession();
@@ -67,13 +68,13 @@ const Header = () => {
           )}
 
           <div className="mt-2 flex flex-col gap-2">
-            {status == "unauthenticated" ? (
+            {status == "authenticated" ? (
               <SheetClose asChild>
                 <Button
                   size="icon"
                   variant="default"
-                  onClick={handlerLoginClick}
-                  className="w-full p-2 justify-start gap-1.5"
+                  onClick={() => handlerLoginClick}
+                  className="w-full justify-start gap-1.5 p-2"
                 >
                   <LogInIcon size={16} />
                   Fazer Login
@@ -85,8 +86,8 @@ const Header = () => {
                   <Button
                     size="icon"
                     variant="destructive"
-                    onClick={handlerLogoutClick}
-                    className="w-full p-2 justify-start gap-1.5"
+                    onClick={() => handlerLogoutClick}
+                    className="w-full justify-start gap-1.5 p-2"
                   >
                     <LogOutIcon size={16}></LogOutIcon>Sair
                   </Button>
@@ -96,7 +97,7 @@ const Header = () => {
                     <Button
                       size="icon"
                       variant="outline"
-                      className="w-full p-2 justify-start gap-1.5"
+                      className="w-full justify-start gap-1.5 p-2"
                     >
                       <HomeIcon size={16} />
                       Início
@@ -107,7 +108,7 @@ const Header = () => {
                   <Button
                     size="icon"
                     variant="outline"
-                    className="w-full p-2 justify-start gap-1.5"
+                    className="w-full justify-start gap-1.5 p-2"
                   >
                     <PercentIcon size={16} />
                     Ofertas
@@ -118,7 +119,7 @@ const Header = () => {
                     <Button
                       size="icon"
                       variant="outline"
-                      className="w-full p-2 justify-start gap-1.5"
+                      className="w-full justify-start gap-1.5 p-2"
                     >
                       <ListOrderedIcon size={16} />
                       Catálogo
@@ -131,13 +132,22 @@ const Header = () => {
         </SheetContent>
       </Sheet>
       <Link href={`/`}>
-        <h1 className="font-semibold text-xl">
+        <h1 className="text-xl font-semibold">
           <span className="text-primary">CLD </span>Web Store
         </h1>
       </Link>
-      <Button size="icon" variant="outline">
-        <ShoppingCartIcon />
-      </Button>
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button size="icon" variant="outline">
+            <ShoppingCartIcon />
+          </Button>
+        </SheetTrigger>
+        <SheetContent>
+          <SheetClose asChild>
+           <Cart />
+          </SheetClose>
+        </SheetContent>
+      </Sheet>
     </Card>
   );
 };

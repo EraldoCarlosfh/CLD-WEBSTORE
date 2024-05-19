@@ -10,7 +10,6 @@ interface ProductImagesProps {
 
 const ProductImages = ({ product: {name, imageUrls}}: ProductImagesProps) => {
   const [currentImage, setCurrentImage] = useState<string>(imageUrls[0]);
-  // setCurrentImage(imageUrls[0]);
 
   const handlerImageClick = (imageUrl: string) => {
     setCurrentImage(imageUrl);
