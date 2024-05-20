@@ -88,7 +88,7 @@ const HomePage = async () => {
         <div>
           <Link href="/category/headphones">
             <PromoBanner
-              src="/banner-home-03.png"
+              src="/banner_phones.jpg"
               alt="Até 55% de desconto em mouses!"
               className="px-5 lg:hidden"
             />
@@ -96,7 +96,7 @@ const HomePage = async () => {
 
           <Link href="/catalog">
             <PromoBanner
-              src="/free-shipping-banner.png"
+              src="/banner_deals_desk.jpg"
               alt="Até 55% de desconto em mouses!"
               className="hidden px-5 lg:block"
             />

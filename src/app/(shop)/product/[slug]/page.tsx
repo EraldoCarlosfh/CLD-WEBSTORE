@@ -3,7 +3,8 @@ import ProductImages from "./components/product-images";
 import ProductList from "@/components/ui/product-list";
 import SectionTitle from "@/components/ui/section-title";
 import ProductInfos from "./components/product-infos";
-import { useSession } from "next-auth/react";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 interface ProductDetailsPageProps {
   params: {
@@ -14,8 +15,17 @@ interface ProductDetailsPageProps {
 const ProductDetailsPage = async ({
   params: { slug },
 }: ProductDetailsPageProps) => {
-  const { data: session } = useSession();
-  
+  const session = await getServerSession(authOptions);  
+
+  if (!session || !session.user) {
+    return (
+      <div className="flex h-full flex-col items-center justify-center gap-2 p-5">
+        <h2 className="font-bold">Acesso Negado!</h2>
+        <p className="text-sm opacity-60">Faça login para ver detalhes de produtos</p>
+      </div>
+    );
+  }
+
   const product = await prismaClient.products.findFirst({
     where: {
       slug: slug,
@@ -37,9 +47,9 @@ const ProductDetailsPage = async ({
 
   const wishListProducts = await prismaClient.wishListProducts.findMany({
     where: {
-      userId: session?.user.id
-    }
-  })
+      userId: session?.user.id,
+    },
+  });
 
   if (!product) {
     return null;

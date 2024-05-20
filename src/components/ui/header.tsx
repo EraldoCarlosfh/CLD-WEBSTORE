@@ -162,23 +162,24 @@ const Header = () => {
           <span className="text-primary">CLD </span>Web Store
         </h1>
       </Link>
+      {status == "authenticated" ? (
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button size="icon" variant="outline" className="relative">
+              {cartQuantityItems > 0 && (
+                <span className="absolute right-[calc(-1.25rem/2)] top-[calc(-1.25rem/2)] flex h-6 w-6 items-center justify-center rounded-lg bg-primary text-sm font-bold">
+                  {cartQuantityItems}
+                </span>
+              )}
+              <ShoppingCartIcon />
+            </Button>
+          </SheetTrigger>
 
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button size="icon" variant="outline" className="relative">
-            {cartQuantityItems > 0 && (
-              <span className="absolute right-[calc(-1.25rem/2)] top-[calc(-1.25rem/2)] flex h-6 w-6 items-center justify-center rounded-lg bg-primary text-sm font-bold">
-                {cartQuantityItems}
-              </span>
-            )}
-            <ShoppingCartIcon />
-          </Button>
-        </SheetTrigger>
-
-        <SheetContent className="w-[350px] lg:w-[600px] lg:max-w-[600px]">
-          <Cart />
-        </SheetContent>
-      </Sheet>
+          <SheetContent className="w-[350px] lg:w-[600px] lg:max-w-[600px]">
+            <Cart />
+          </SheetContent>
+        </Sheet>
+      ): <div></div>}
     </Card>
   );
 };
