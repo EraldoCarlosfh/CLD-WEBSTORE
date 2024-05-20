@@ -1,12 +1,12 @@
 "use client";
 
-import { addProductToWishlist } from "@/actions/wishlist";
+import { addProductToWishlist } from "@/actions/Wishlist";
 import { StarIcon } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import LoadingButton from "../../../../../components/ui/loading-button";
+import LoadingButton from "@/components/ui/loading-button";
 import { WishLists } from "@prisma/client";
 
 interface WishButtonProps {
