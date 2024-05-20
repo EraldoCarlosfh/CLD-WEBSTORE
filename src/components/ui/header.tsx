@@ -27,30 +27,34 @@ const Header = () => {
   const { status, data } = useSession();
 
   const handlerLoginClick = async () => {
-    await signIn().then(result => {
-      result;
-    }).finally(() => {
-      toast.success(`Login efetuado com sucesso!`, {
-        position: "top-right",
-        autoClose: 2000,
-        theme: "dark",
-        pauseOnHover: false,
+    await signIn()
+      .then((result) => {
+        result;
+      })
+      .finally(() => {
+        toast.success(`Login efetuado com sucesso!`, {
+          position: "top-right",
+          autoClose: 2000,
+          theme: "dark",
+          pauseOnHover: false,
+        });
       });
-    });
   };
 
   const handlerLogoutClick = async () => {
-    await signOut().then(result => {
-      result;
-    }).finally(() => {
-      localStorage.removeItemItem("@fsw-store/cart-products");
-      toast.success(`Logout efetuado com sucesso!`, {
-        position: "top-right",
-        autoClose: 2000,
-        theme: "dark",
-        pauseOnHover: false,
+    await signOut()
+      .then((result) => {
+        result;
+      })
+      .finally(() => {
+        localStorage.removeItemItem("@fsw-store/cart-products");
+        toast.success(`Logout efetuado com sucesso!`, {
+          position: "top-right",
+          autoClose: 2000,
+          theme: "dark",
+          pauseOnHover: false,
+        });
       });
-    });
   };
   return (
     <Card className="flex items-center justify-between p-[1.875rem]">
@@ -125,14 +129,16 @@ const Header = () => {
                   </Link>
                 </SheetClose>
                 <SheetClose asChild>
-                  <Button
-                    size="icon"
-                    variant="outline"
-                    className="w-full justify-start gap-1.5 p-2"
-                  >
-                    <PercentIcon size={16} />
-                    Ofertas
-                  </Button>
+                  <Link href="/deals">
+                    <Button
+                      size="icon"
+                      variant="outline"
+                      className="w-full justify-start gap-1.5 p-2"
+                    >
+                      <PercentIcon size={16} />
+                      Ofertas
+                    </Button>
+                  </Link>
                 </SheetClose>
                 <SheetClose asChild>
                   <Link href={`/catalog`}>

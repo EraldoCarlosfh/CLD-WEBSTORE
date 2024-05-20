@@ -26,7 +26,7 @@ const CategoryProductsPage = async ({
 
   return (
     <div className="flex flex-col gap-8 p-5">
-      <IconBadge variant="outline">
+      <IconBadge variant="heading">
         {CATEGORY_ICON[slug as keyof typeof CATEGORY_ICON]}
         {category.name}
       </IconBadge>
