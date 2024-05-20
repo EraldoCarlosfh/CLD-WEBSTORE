@@ -11,6 +11,7 @@ import { ScrollArea } from "./scroll-area";
 import { createOrder } from "@/actions/order";
 import { createCheckout } from "@/actions/checkout";
 import { loadStripe } from "@stripe/stripe-js";
+import { toast } from "react-toastify";
 
 const Cart = () => {
   const { data } = useSession();
@@ -21,6 +22,13 @@ const Cart = () => {
       // TODO: redirecionar para o login
       return;
     }
+
+    toast.warning(`Redirecionamento para página de pagamento, Aguarde!`, {
+      position: "top-right",
+      autoClose: 2000,
+      theme: "dark",
+      pauseOnHover: false,
+    });
 
     const order = await createOrder(products, (data?.user as any).id);
 
