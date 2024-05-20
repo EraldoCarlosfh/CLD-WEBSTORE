@@ -50,5 +50,5 @@ export const POST = async (request: Request) => {
     });
   }
 
-  return NextResponse.json({ received: true });
+  return NextResponse.json('');
 };
