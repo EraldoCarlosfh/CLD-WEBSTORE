@@ -101,6 +101,7 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
     const product = products.find((product) => product.id == productId)?.name;
     setProducts((prev) => prev.filter((product) => product.id != productId));
 
+    
     toast.success(`${product} removido do carrinho com sucesso!`, {
       position: "top-right",
       autoClose: 2000,
