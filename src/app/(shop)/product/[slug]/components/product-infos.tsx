@@ -1,13 +1,23 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import DiscountBadge from "@/components/ui/discount-badge";
-import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  ShoppingCartIcon,
+  WalletIcon,
+} from "lucide-react";
 import { useContext, useState } from "react";
 import Image from "next/image";
-import { CartContext } from "@/providers/cart";
+import { CartContext, CartProduct } from "@/providers/cart";
 import { formatedPrice } from "@/lib/utils";
 import WishButton from "./wish-buton";
 import { Products, WishListProducts } from "@prisma/client";
+import { toast } from "react-toastify";
+import { createCheckout } from "@/actions/checkout";
+import { createOrder } from "@/actions/order";
+import { loadStripe } from "@stripe/stripe-js";
+import { useSession } from "next-auth/react";
 
 interface ProductInfosProps {
   product: Products;
@@ -15,11 +25,38 @@ interface ProductInfosProps {
 }
 
 const ProductInfos = ({ product, wishListProducts }: ProductInfosProps) => {
+  const { data } = useSession();
   const [quantity, setQuantity] = useState<number>(1);
   const { addProductsToCart } = useContext(CartContext);
   const [currentImage] = useState<string>(
     "https://xarwas4csfe8g80s.public.blob.vercel-storage.com/fast-freight-NcnClOCGNz1vxkrPPLimyUyCvIdYwD.png",
   );
+
+  const totalPrice = Number(product.basePrice) * quantity;
+
+  const handleFinishPurchaseClick = async (product: Products) => {
+    const productCart: CartProduct[] = [];
+
+    productCart.push({...product, quantity})
+    
+    toast.warning(`Redicionando para página de pagamento, Aguarde!`, {
+      position: "top-right",
+      autoClose: 2000,
+      theme: "dark",
+      pauseOnHover: false,
+    });
+
+    const order = await createOrder(productCart, (data?.user as any).id);
+
+    const checkout = await createCheckout(productCart, order.id);
+
+    const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
+
+    // Criar pedido no banco
+    stripe?.redirectToCheckout({
+      sessionId: checkout.id,
+    });
+  };
 
   function handlerDecreaseQuantityClick() {
     setQuantity((prev) => (prev == 1 ? prev : prev - 1));
@@ -66,6 +103,7 @@ const ProductInfos = ({ product, wishListProducts }: ProductInfosProps) => {
         >
           <ArrowRightIcon size={16} />
         </Button>
+        <span className="ml-4 font-bold lg:text-lg">{formatedPrice(totalPrice)}</span>
       </div>
 
       <div className="mt-8 flex flex-col gap-3">
@@ -76,13 +114,26 @@ const ProductInfos = ({ product, wishListProducts }: ProductInfosProps) => {
       </div>
 
       <div className="mt-8 flex flex-col gap-5">
-        <WishButton productId={product.id} wishListProducts={wishListProducts} />
+        <WishButton
+          productId={product.id}
+          wishListProducts={wishListProducts}
+        />
 
         <Button
           className="font-bold uppercase"
           onClick={() => handlerAddProductCartClick(product)}
         >
+          {" "}
+          <ShoppingCartIcon className="mr-2 h-5 w-5 fill-white" />
           Adicionar ao carrinho
+        </Button>
+
+        <Button
+          className="font-bold uppercase"
+          onClick={() => handleFinishPurchaseClick(product)}
+        >
+          <WalletIcon className="mr-2 h-5 w-5 fill-white" />
+          Comprar agora
         </Button>
       </div>
 

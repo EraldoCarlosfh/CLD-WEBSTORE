@@ -32,18 +32,11 @@ const Cart = () => {
 
     const order = await createOrder(products, (data?.user as any).id);
 
-    console.log('Order: ', order);
-
     const checkout = await createCheckout(products, order.id);
-
-    console.log('Checkout: ', checkout);
 
     const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
-    console.log('Stripe: ', stripe);
-
     // Criar pedido no banco
-
     stripe?.redirectToCheckout({
       sessionId: checkout.id,
     });
