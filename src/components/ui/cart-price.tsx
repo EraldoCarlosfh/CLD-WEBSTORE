@@ -12,7 +12,7 @@ const CartPrice = ({ price, title, isDiscount, className }: CartPriceProps) => {
     <div className={cn("flex justify-between", className)}>
       <span className="capitalize">{title}</span>
       <span>
-        {isDiscount ? "- " : null}{" "}
+        {isDiscount ? "- " : null}
         {typeof price == "number" && !isNaN(price)
           ? formatedPrice(Number(price))
           : price}

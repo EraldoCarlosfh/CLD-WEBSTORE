@@ -22,7 +22,7 @@ const Cart = () => {
       return;
     }
 
-    const order = await createOrder(products, "clw0a1eba0000kiujvjv4mkpr");
+    const order = await createOrder(products, (data?.user as any).id);
 
     console.log('Order: ', order);
 
