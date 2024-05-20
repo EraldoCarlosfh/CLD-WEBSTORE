@@ -1,6 +1,5 @@
 import { prismaClient } from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { toast } from "react-toastify";
 import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_WEBHOOK_SECRET_KEY, {
@@ -8,15 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_WEBHOOK_SECRET_KEY, {
 });
 
 export const POST = async (request: Request) => {
-  const signature = request.headers.get("stripe-signature");
-
-  if (!signature)
-    return toast.success(`No signature`, {
-      position: "top-right",
-      autoClose: 2000,
-      theme: "dark",
-      pauseOnHover: false,
-    });
+  const signature = request.headers.get("stripe-signature")!;
 
   const text = await request.text();
 
