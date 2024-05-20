@@ -6,13 +6,14 @@ import Link from "next/link";
 
 interface WishlistItemProps {
   product: Products;
+  className?: string;
 }
 
-const WishlistItem = ({ product }: WishlistItemProps) => {
+const WishlistItem = ({ product, className }: WishlistItemProps) => {
   return (
-    <Link href={`/product/${product.slug}`}>
-      <div className="flex flex-col gap-4">
-        <div className="relative flex aspect-square h-40 w-40 items-center justify-center rounded-lg bg-accent">
+    <Link href={`/product/${product.slug}`} className={cn("flex min-w-[156px] flex-col gap-4", className)}>
+       <div className="flex flex-col gap-4">
+        <div className="relative flex h-[10.625rem] w-full items-center justify-center rounded-lg bg-accent">
           <Image
             src={product.imageUrls[0]}
             height={0}
@@ -28,10 +29,9 @@ const WishlistItem = ({ product }: WishlistItemProps) => {
           )}
         </div>
 
-        <div className="flex w-40 flex-col gap-1">
-          <div className="flex">
-            <p className="truncate text-sm">{product.name}</p>
-          </div>
+        <div className="flex flex-col gap-1">      
+          <p className="truncate text-sm">{product.name}</p>
+
           <div className="flex items-center gap-2 ">
             {product.discountPercentage > 0 ? (
               <>

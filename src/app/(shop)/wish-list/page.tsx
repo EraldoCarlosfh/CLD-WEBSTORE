@@ -39,15 +39,15 @@ async function WishListPage() {
   }
 
   return (
-    <div className="p-5 lg:container lg:mx-auto lg:py-10">
+    <div className="mx-auto flex flex-col gap-8 p-5 lg:container lg:gap-10 lg:py-10">
       <Badge
         className="w-fit gap-1 border-r-2 border-primary px-3 py-1 text-sm font-semibold uppercase"
         variant="outline"
       >
         <Heart size={16} />
         Favoritos
-      </Badge>
-      <div className="mt-4 grid grid-cols-2 gap-8">
+      </Badge>  
+      <div className="grid grid-cols-2 gap-8 lg:grid-cols-6">
         {wishlist.map((product) => (
           <WishlistItem key={product.id} product={product} />
         ))}
