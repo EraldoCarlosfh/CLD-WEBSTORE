@@ -3,7 +3,7 @@ const Footer = () => {
     <div className="bg-accent px-8 py-4 text-[0.625rem] opacity-75 lg:text-sm">
       <div className="mx-auto lg:container">
         © 2023 Copyright{" "}
-        <span className="ml-1 font-semibold"> CLD Web Store</span>
+        <span className="ml-1 font-semibold"> CLD Store</span>
       </div>
     </div>
   );

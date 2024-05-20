@@ -159,7 +159,7 @@ const Header = () => {
 
       <Link href={`/`}>
         <h1 className="text-xl font-semibold">
-          <span className="text-primary">CLD </span>Web Store
+          <span className="text-primary">CLD </span>Store
         </h1>
       </Link>
       {status == "authenticated" ? (
