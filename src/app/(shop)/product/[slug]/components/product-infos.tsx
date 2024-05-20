@@ -1,12 +1,13 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import DiscountBadge from "@/components/ui/discount-badge";
-import { Products } from "@prisma/client";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import { useContext, useState } from "react";
 import Image from "next/image";
 import { CartContext } from "@/providers/cart";
 import { formatedPrice } from "@/lib/utils";
+import WishButton from "./wish-buton";
+import { Products } from "@prisma/client";
 
 interface ProductInfosProps {
   product: Products;
@@ -28,14 +29,15 @@ const ProductInfos = ({ product }: ProductInfosProps) => {
   }
 
   function handlerAddProductCartClick(product: Products) {
-    addProductsToCart({ ...product, quantity });   
+    addProductsToCart({ ...product, quantity });
   }
 
   return (
-    <div className="flex flex-col px-5">
-      <h2 className="text-lg">{product.name}</h2>
+    <div className="flex flex-col px-5 lg:w-[40%] lg:rounded-lg lg:bg-accent lg:p-10">
+      <h2 className="text-lg lg:text-2xl">{product.name}</h2>
+
       <div className="flex items-center gap-2">
-        <h1 className="text-xl font-bold">
+        <h1 className="text-xl font-bold lg:text-3xl">
           {formatedPrice(Number(product.totalPrice))}
         </h1>
         {product.discountPercentage > 0 && (
@@ -43,11 +45,11 @@ const ProductInfos = ({ product }: ProductInfosProps) => {
         )}
       </div>
       {product.discountPercentage > 0 && (
-        <p className="text-sm line-through opacity-75">
+        <p className="text-sm line-through opacity-75 lg:text-base">
           {formatedPrice(Number(product.basePrice))}
         </p>
       )}
-      <div className="mt-4 flex items-center gap-3">
+      <div className="mt-4 flex items-center gap-2">
         <Button
           size={"icon"}
           variant="outline"
@@ -64,6 +66,7 @@ const ProductInfos = ({ product }: ProductInfosProps) => {
           <ArrowRightIcon size={16} />
         </Button>
       </div>
+
       <div className="mt-8 flex flex-col gap-3">
         <h1 className="text-lg">Descrição</h1>
         <p className="whitespace-pre-line text-justify text-sm font-light opacity-60">
@@ -71,14 +74,18 @@ const ProductInfos = ({ product }: ProductInfosProps) => {
         </p>
       </div>
 
-      <Button
-        className="mb-5 mt-4 font-semibold uppercase"
-        onClick={() => handlerAddProductCartClick(product)}
-      >
-        Adicionar ao carrinho
-      </Button>
+      <div className="mt-8 flex flex-col gap-5">
+        <WishButton productId={product.id} wishLists={product.wishLists} />
 
-      <div className="flex items-center justify-between rounded-lg bg-accent px-5 py-8">
+        <Button
+          className="font-bold uppercase"
+          onClick={() => handlerAddProductCartClick(product)}
+        >
+          Adicionar ao carrinho
+        </Button>
+      </div>
+
+      <div className="mt-8 flex items-center justify-between rounded-lg bg-accent px-5 py-6 lg:bg-[#2A2A2A]">
         <div className="flex items-center gap-2">
           <Image
             src={currentImage}
@@ -96,7 +103,7 @@ const ProductInfos = ({ product }: ProductInfosProps) => {
             </p>
           </div>
         </div>
-        <h1 className="pr-4 font-semibold">Frete Grátis</h1>
+        <h1 className="pr-4 text-xs font-bold">Frete Grátis</h1>
       </div>
     </div>
   );

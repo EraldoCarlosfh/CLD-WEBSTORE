@@ -1,5 +1,6 @@
 "use client";
 import {
+  Heart,
   HomeIcon,
   ListOrderedIcon,
   LogInIcon,
@@ -21,40 +22,23 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import Link from "next/link";
 import Cart from "./cart";
-import { toast } from "react-toastify";
+import { Separator } from "./separator";
+import { CartContext } from "@/providers/cart";
+import { useContext } from "react";
 
 const Header = () => {
   const { status, data } = useSession();
 
+  const { products } = useContext(CartContext);
+
+  const cartQuantityItems = products.length;
+
   const handlerLoginClick = async () => {
-    await signIn()
-      .then((result) => {
-        result;
-      })
-      .finally(() => {
-        toast.success(`Login efetuado com sucesso!`, {
-          position: "top-right",
-          autoClose: 2000,
-          theme: "dark",
-          pauseOnHover: false,
-        });
-      });
+    await signIn();
   };
 
   const handlerLogoutClick = async () => {
-    await signOut()
-      .then((result) => {
-        result;
-      })
-      .finally(() => {
-        localStorage.removeItemItem("@fsw-store/cart-products");
-        toast.success(`Logout efetuado com sucesso!`, {
-          position: "top-right",
-          autoClose: 2000,
-          theme: "dark",
-          pauseOnHover: false,
-        });
-      });
+    await signOut();
   };
   return (
     <Card className="flex items-center justify-between p-[1.875rem]">
@@ -64,30 +48,33 @@ const Header = () => {
             <MenuIcon />
           </Button>
         </SheetTrigger>
-        <SheetContent side="left">
+        <SheetContent side="left" className="w-[21.875rem]">
           <SheetHeader className="text-left text-lg font-semibold">
             Menu
           </SheetHeader>
           {status == "authenticated" && data?.user && (
-            <div className="flex items-center gap-2 py-3">
-              <Avatar>
-                <AvatarFallback>
-                  {data?.user?.name?.[0].toUpperCase()}
-                </AvatarFallback>
+            <div className="flex flex-col">
+              <div className="flex items-center gap-2 py-4">
+                <Avatar>
+                  <AvatarFallback>
+                    {data?.user?.name?.[0].toUpperCase()}
+                  </AvatarFallback>
 
-                {data?.user?.image && (
-                  <AvatarImage
-                    width="45"
-                    style={{ borderRadius: 25, border: "1px solid white" }}
-                    src={data?.user?.image}
-                  />
-                )}
-              </Avatar>
+                  {data?.user?.image && (
+                    <AvatarImage
+                      width="45"
+                      style={{ borderRadius: 25, border: "1px solid white" }}
+                      src={data?.user?.image}
+                    />
+                  )}
+                </Avatar>
 
-              <div className="flex-col text-center">
-                <p className="font-medium">{data?.user?.name}</p>
-                <p className="text-sm opacity-75">Boas compras!</p>
+                <div className="flex flex-col">
+                  <p className="font-medium">{data?.user?.name}</p>
+                  <p className="text-sm opacity-75">Boas compras!</p>
+                </div>
               </div>
+              <Separator />
             </div>
           )}
 
@@ -98,7 +85,7 @@ const Header = () => {
                   size="icon"
                   variant="default"
                   onClick={handlerLoginClick}
-                  className="w-full justify-start gap-1.5 p-2"
+                  className="w-full justify-start gap-2 p-2"
                 >
                   <LogInIcon size={16} />
                   Fazer Login
@@ -111,7 +98,7 @@ const Header = () => {
                     size="icon"
                     variant="destructive"
                     onClick={handlerLogoutClick}
-                    className="w-full justify-start gap-1.5 p-2"
+                    className="w-full justify-start gap-2 p-2"
                   >
                     <LogOutIcon size={16}></LogOutIcon>Sair
                   </Button>
@@ -121,7 +108,7 @@ const Header = () => {
                     <Button
                       size="icon"
                       variant="outline"
-                      className="w-full justify-start gap-1.5 p-2"
+                      className="w-full justify-start gap-2 p-2"
                     >
                       <HomeIcon size={16} />
                       Início
@@ -133,7 +120,7 @@ const Header = () => {
                     <Button
                       size="icon"
                       variant="outline"
-                      className="w-full justify-start gap-1.5 p-2"
+                      className="w-full justify-start gap-2 p-2"
                     >
                       <PercentIcon size={16} />
                       Ofertas
@@ -145,10 +132,22 @@ const Header = () => {
                     <Button
                       size="icon"
                       variant="outline"
-                      className="w-full justify-start gap-1.5 p-2"
+                      className="w-full justify-start gap-2 p-2"
                     >
                       <ListOrderedIcon size={16} />
                       Catálogo
+                    </Button>
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link href={`/wish-list`}>
+                    <Button
+                      size="icon"
+                      variant="outline"
+                      className="w-full justify-start gap-2 p-2"
+                    >
+                      <Heart size={16} />
+                      Favoritos
                     </Button>
                   </Link>
                 </SheetClose>
@@ -157,21 +156,27 @@ const Header = () => {
           </div>
         </SheetContent>
       </Sheet>
+
       <Link href={`/`}>
         <h1 className="text-xl font-semibold">
           <span className="text-primary">CLD </span>Web Store
         </h1>
       </Link>
+
       <Sheet>
         <SheetTrigger asChild>
-          <Button size="icon" variant="outline">
+          <Button size="icon" variant="outline" className="relative">
+            {cartQuantityItems > 0 && (
+              <span className="absolute right-[calc(-1.25rem/2)] top-[calc(-1.25rem/2)] flex h-6 w-6 items-center justify-center rounded-lg bg-primary text-sm font-bold">
+                {cartQuantityItems}
+              </span>
+            )}
             <ShoppingCartIcon />
           </Button>
         </SheetTrigger>
-        <SheetContent className="w-[350px]">
-          <SheetClose asChild>
-            <Cart />
-          </SheetClose>
+
+        <SheetContent className="w-[350px] lg:w-[600px] lg:max-w-[600px]">
+          <Cart />
         </SheetContent>
       </Sheet>
     </Card>

@@ -34,7 +34,8 @@ model Products {
   category           Categorys        @relation(fields: [categoryId], references: [id])
   discountPercentage Int              @default(0)
   totalPrice         Decimal          @db.Decimal(8, 2)
-  OrdersProducts     OrdersProducts[]
+  wishLists          WishLists[]      @relation("wishListProducts")
+  ordersProducts     OrdersProducts[]
 
   @@map("products")
 }
@@ -100,16 +101,27 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String      @id @default(cuid())
   name          String?
-  email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
+  email         String?     @unique
+  emailVerified DateTime?   @map("email_verified")
   image         String?
   accounts      Account[]
   sessions      Session[]
   Orders        Orders[]
+  wishLists     WishLists[]
 
   @@map("users")
+}
+
+model WishLists {
+  id       String     @id @default(uuid())
+  name     String
+  user     User       @relation(fields: [userId], references: [id])
+  userId   String
+  products Products[] @relation("wishListProducts")
+
+  @@map("wishLists")
 }
 
 model VerificationToken {

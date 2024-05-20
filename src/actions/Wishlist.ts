@@ -1,50 +1,50 @@
-// "use server";
+"use server";
 
-// import { prismaClient } from "@/lib/prisma";
+import { prismaClient } from "@/lib/prisma";
 
-// export const addProductToWishlist = async (
-//     userId: string,
-//     productId: string,
-//     wishlistId?: string,
-// ) => {
-//     let wishlist;
+export const addProductToWishlist = async (
+    userId: string,
+    productId: string,
+    wishListId?: string,
+) => {
+    let wishLists;
 
-//     if (wishlistId) {
-//         wishlist = await prismaClient.wishLists.findFirstOrThrow({
-//             where: {
-//                 userId: userId,
-//                 id: wishlistId,
-//             },
-//         });
-//     } 
+    if (wishListId) {
+        wishLists = await prismaClient.wishLists.findFirstOrThrow({
+            where: {
+                userId: userId,
+                id: wishListId,
+            },
+        });
+    } 
     
-//     if(!wishlistId) {
-//         wishlist = await prismaClient.wishLists.findFirst({
-//             where: {
-//                 userId: userId,
-//             },
-//         });
+    if(!wishListId) {
+        wishLists = await prismaClient.wishLists.findFirst({
+            where: {
+                userId: userId,
+            },
+        });
 
-//         if (!wishlist) {
-//             wishlist = await prismaClient.wishLists.create({
-//                 data: {
-//                     userId: userId,
-//                     name: 'Favoritos',
-//                 },
-//             });
-//         }
-//     }
+        if (!wishLists) {
+            wishLists = await prismaClient.wishLists.create({
+                data: {
+                    userId: userId,
+                    name: 'Favoritos',
+                },
+            });
+        }
+    }
 
-//     await prismaClient.products.update({
-//         where: {
-//             id: productId,
-//         },
-//         data: {
-//             wishLists: {
-//                 connect: {
-//                     id: wishlist!.id,
-//                 },
-//             },
-//         },
-//     });
-// };
+    await prismaClient.products.update({
+        where: {
+            id: productId,
+        },
+        data: {
+            wishLists: {
+                connect: {
+                    id: wishLists!.id,
+                },
+            },
+        },
+    });
+};

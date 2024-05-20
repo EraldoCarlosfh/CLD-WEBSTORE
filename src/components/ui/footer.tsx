@@ -1,8 +1,10 @@
 const Footer = () => {
   return (
-    <div className="flex justify-center bg-accent px-8 py-4 opacity-75 text-[0.65rem]">
-      © 2023 Copyright
-      <span className="font-semibold ml-1"> CLD Web Store</span>
+    <div className="bg-accent px-8 py-4 text-[0.625rem] opacity-75 lg:text-sm">
+      <div className="mx-auto lg:container">
+        © 2023 Copyright{" "}
+        <span className="ml-1 font-semibold"> CLD Web Store</span>
+      </div>
     </div>
   );
 };

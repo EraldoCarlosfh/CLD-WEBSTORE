@@ -48,17 +48,23 @@ const ProductItem = ({ product, className }: ProductItemProps) => {
               <TooltipContent>{product.name}</TooltipContent>
             </Tooltip>
           </TooltipProvider> */}
-          <p className="overflow-hidden text-ellipsis whitespace-nowrap text-sm">
-            {product.name}
-          </p>
-          <div className="flex items-center gap-2">
-            <p className="text-sm font-semibold">
-              {formatedPrice(Number(product.totalPrice))}
-            </p>
-            {product.discountPercentage > 0 && (
-              <span className="overflow-hidden text-ellipsis whitespace-nowrap text-xs line-through opacity-75">
+          <p className="truncate text-sm">{product.name}</p>
+
+          <div className="flex items-center gap-2 ">
+            {product.discountPercentage > 0 ? (
+              <>
+                <p className="truncate font-semibold lg:text-lg">
+                  {formatedPrice(Number(product.totalPrice))}
+                </p>
+
+                <p className="truncate text-xs line-through opacity-75 lg:text-sm">
+                  {formatedPrice(Number(product.basePrice))}
+                </p>
+              </>
+            ) : (
+              <p className="truncate text-sm font-semibold">
                 {formatedPrice(Number(product.basePrice))}
-              </span>
+              </p>
             )}
           </div>
         </div>

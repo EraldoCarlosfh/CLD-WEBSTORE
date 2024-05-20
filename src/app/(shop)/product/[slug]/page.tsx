@@ -1,8 +1,8 @@
 import { prismaClient } from "@/lib/prisma";
 import ProductImages from "./components/product-images";
-import ProductInfos from "./components/product-infos";
 import ProductList from "@/components/ui/product-list";
 import SectionTitle from "@/components/ui/section-title";
+import ProductInfos from "./components/product-infos";
 
 interface ProductDetailsPageProps {
   params: {
@@ -34,14 +34,16 @@ const ProductDetailsPage = async ({
 
   if (!product) {
     return null;
-  } 
+  }
 
   return (
-    <div className="flex flex-col gap-8 pb-8">
-      <ProductImages product={product} />
-      <ProductInfos product={product} />
-      <div>
-        <SectionTitle>Produtos Recomendados</SectionTitle>
+    <div className="flex flex-col gap-8 pb-8 lg:container lg:mx-auto lg:gap-10 lg:py-10">
+      <div className="flex flex-col gap-8 lg:flex-row lg:gap-9  lg:px-5">
+        <ProductImages product={product} />
+        <ProductInfos product={product} />
+      </div>
+      <div className="flex flex-col gap-5">
+        <SectionTitle className="pl-5">Produtos Recomendados</SectionTitle>
         <ProductList products={product.category.products} />
       </div>
     </div>
