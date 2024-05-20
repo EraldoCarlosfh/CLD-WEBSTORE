@@ -1,15 +1,11 @@
-import { Prisma } from "@prisma/client";
+import { Prisma, Products } from "@prisma/client";
 import Image from "next/image";
 import DiscountBadge from "./discount-badge";
 import { cn, formatedPrice } from "@/lib/utils";
 import Link from "next/link";
 
 interface WishlistItemProps {
-  product: Prisma.ProductsGetPayload<{
-    include: {
-      wishLists: true;
-    };
-  }>;
+  product: Products;
 }
 
 const WishlistItem = ({ product }: WishlistItemProps) => {

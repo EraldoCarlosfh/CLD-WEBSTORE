@@ -7,10 +7,10 @@ export const addProductToWishlist = async (
     productId: string,
     wishListId?: string,
 ) => {
-    let wishLists;
+    let wishListProducts;
 
     if (wishListId) {
-        wishLists = await prismaClient.wishLists.findFirstOrThrow({
+        wishListProducts = await prismaClient.wishListProducts.findFirstOrThrow({
             where: {
                 userId: userId,
                 id: wishListId,
@@ -19,16 +19,17 @@ export const addProductToWishlist = async (
     } 
     
     if(!wishListId) {
-        wishLists = await prismaClient.wishLists.findFirst({
+        wishListProducts = await prismaClient.wishListProducts.findFirst({
             where: {
                 userId: userId,
             },
         });
 
-        if (!wishLists) {
-            wishLists = await prismaClient.wishLists.create({
+        if (!wishListProducts) {
+            wishListProducts = await prismaClient.wishListProducts.create({
                 data: {
                     userId: userId,
+                    productId: productId,
                     name: 'Favoritos',
                 },
             });
@@ -40,9 +41,9 @@ export const addProductToWishlist = async (
             id: productId,
         },
         data: {
-            wishLists: {
+            wishListProducts: {
                 connect: {
-                    id: wishLists!.id,
+                    id: wishListProducts!.id,
                 },
             },
         },

@@ -19,15 +19,12 @@ async function WishListPage() {
 
   const wishlist = await prismaClient.products.findMany({
     where: {
-      wishLists: {
+      wishListProducts: {
         some: {
           userId: session.user.id,
         },
       },
-    },
-    include: {
-      wishLists: true,
-    },
+    }, 
   });
 
   if (!wishlist.length) {

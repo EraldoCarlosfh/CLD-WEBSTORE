@@ -7,13 +7,14 @@ import Image from "next/image";
 import { CartContext } from "@/providers/cart";
 import { formatedPrice } from "@/lib/utils";
 import WishButton from "./wish-buton";
-import { Products } from "@prisma/client";
+import { Products, WishListProducts } from "@prisma/client";
 
 interface ProductInfosProps {
   product: Products;
+  wishListProducts: WishListProducts[];
 }
 
-const ProductInfos = ({ product }: ProductInfosProps) => {
+const ProductInfos = ({ product, wishListProducts }: ProductInfosProps) => {
   const [quantity, setQuantity] = useState<number>(1);
   const { addProductsToCart } = useContext(CartContext);
   const [currentImage] = useState<string>(
@@ -75,7 +76,7 @@ const ProductInfos = ({ product }: ProductInfosProps) => {
       </div>
 
       <div className="mt-8 flex flex-col gap-5">
-        <WishButton productId={product.id} wishLists={product.wishLists} />
+        <WishButton productId={product.id} wishListProducts={wishListProducts} />
 
         <Button
           className="font-bold uppercase"

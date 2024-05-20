@@ -1,23 +1,23 @@
 "use client";
 
-import { addProductToWishlist } from "@/actions/Wishlist";
+import { addProductToWishlist } from "@/actions/wishlist";
 import { StarIcon } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import LoadingButton from "@/components/ui/loading-button";
-import { WishLists } from "@prisma/client";
+import { WishListProducts } from "@prisma/client";
 
 interface WishButtonProps {
   productId: string;
-  wishLists: WishLists[];
+  wishListProducts: WishListProducts[];
 }
-const WishButton = ({ productId, wishLists }: WishButtonProps) => {
+const WishButton = ({ productId, wishListProducts }: WishButtonProps) => {
   const { data: session } = useSession();
 
-  if (wishLists == undefined)
-    wishLists = [];
+  if (wishListProducts == undefined)
+    wishListProducts = [];
   
   const router = useRouter();
 
@@ -68,7 +68,7 @@ const WishButton = ({ productId, wishLists }: WishButtonProps) => {
       onClick={handleAddToWishlist}
     >
       <StarIcon
-        className={"h-5 w-5 " + (wishLists.length > 0 && "fill-white")}
+        className={"h-5 w-5 " + (wishListProducts.length > 0 && "fill-white")}
       />
       Favoritos
     </LoadingButton>
