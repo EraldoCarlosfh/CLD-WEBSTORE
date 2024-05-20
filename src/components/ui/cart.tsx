@@ -23,7 +23,7 @@ const Cart = () => {
       return;
     }
 
-    toast.warning(`Redirecionamento para página de pagamento, Aguarde!`, {
+    toast.warning(`Redicionando para página de pagamento, Aguarde!`, {
       position: "top-right",
       autoClose: 2000,
       theme: "dark",
