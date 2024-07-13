@@ -41,13 +41,13 @@ model Products {
 }
 
 model Orders {
-  id               String             @id @default(uuid())
-  userId           String
-  users            User               @relation(fields: [userId], references: [id])
-  ordersProducts   OrdersProducts[]
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @default(now()) @updatedAt
-  status           OrderStatus        @default(WAITING_FOR_PAYMENT)
+  id             String           @id @default(uuid())
+  userId         String
+  users          User             @relation(fields: [userId], references: [id])
+  ordersProducts OrdersProducts[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @default(now()) @updatedAt
+  status         OrderStatus      @default(WAITING_FOR_PAYMENT)
 
   @@map("orders")
 }
@@ -115,15 +115,16 @@ model User {
 }
 
 model WishListProducts {
-  id     String  @id @default(uuid())
-  name     String
+  id        String   @id @default(uuid())
+  name      String
   productId String
-  products   Products   @relation(fields: [productId], references: [id])
-  userId String
-  users   User   @relation(fields: [userId], references: [id])
+  products  Products @relation(fields: [productId], references: [id])
+  userId    String
+  users     User     @relation(fields: [userId], references: [id])
 
   @@map("wishListProducts")
 }
+
 model VerificationToken {
   identifier String
   token      String

@@ -29,7 +29,7 @@ const ProductInfos = ({ product, wishListProducts }: ProductInfosProps) => {
   const [quantity, setQuantity] = useState<number>(1);
   const { addProductsToCart } = useContext(CartContext);
   const [currentImage] = useState<string>(
-    "https://xarwas4csfe8g80s.public.blob.vercel-storage.com/fast-freight-NcnClOCGNz1vxkrPPLimyUyCvIdYwD.png",
+    "",
   );
 
   const totalPrice = Number(product.basePrice) * quantity;
